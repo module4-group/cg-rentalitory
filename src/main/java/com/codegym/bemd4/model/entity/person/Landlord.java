@@ -62,8 +62,6 @@ public class Landlord {
             columnDefinition = "text", nullable = true)
     private String avatar;
 
-    @OneToMany(mappedBy="landlord")
-    private List<Apartment> apartments;
 
     @Column(name = "activated", nullable = true)
     private Boolean activated;
