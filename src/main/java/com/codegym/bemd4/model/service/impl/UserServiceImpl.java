@@ -37,6 +37,7 @@ public class UserServiceImpl implements UserService {
         return modelMapper.map(user, UserDTO.class);
     }
 
+
     @Override
     public UserDTO remove(Long id) {
         userRepository.deleteById(id);
@@ -49,6 +50,7 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findUserByUsername(username);
         return modelMapper.map(user, UserDTO.class);
     }
+
 
     @Override
     public UserDTO findUserByEmail(String email) {
