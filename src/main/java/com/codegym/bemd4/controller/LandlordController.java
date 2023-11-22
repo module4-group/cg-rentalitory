@@ -18,32 +18,32 @@ public class LandlordController {
     @Autowired
     UserService landlordService;
 
-    @GetMapping
-    public ResponseEntity<List<UserDTO>> getUsers() {
-        List<UserDTO> UserDTOs = landlordService.getUsers();
-        if (UserDTOs.isEmpty()) {
-            return new ResponseEntity<List<UserDTO>>(HttpStatus.NO_CONTENT);
-        }
-        return new ResponseEntity<>(UserDTOs, HttpStatus.OK);
-    }
-
-    @PostMapping("/save")
-    public ResponseEntity<UserDTO> register(@RequestBody UserDTO user) {
-
-        if (user==null){
-            return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(userService.save(user), HttpStatus.OK);
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<UserDTO> deleteUser(@PathVariable Long id) {
-        UserDTO user = userService.getUserById(id);
-
-        if (user == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        userService.remove(id);
-        return new ResponseEntity<>(user, HttpStatus.NO_CONTENT);
-    }
+//    @GetMapping
+//    public ResponseEntity<List<UserDTO>> getUsers() {
+//        List<UserDTO> UserDTOs = landlordService.getUsers();
+//        if (UserDTOs.isEmpty()) {
+//            return new ResponseEntity<List<UserDTO>>(HttpStatus.NO_CONTENT);
+//        }
+//        return new ResponseEntity<>(UserDTOs, HttpStatus.OK);
+//    }
+//
+//    @PostMapping("/save")
+//    public ResponseEntity<UserDTO> register(@RequestBody UserDTO user) {
+//
+//        if (user==null){
+//            return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
+//        }
+//        return new ResponseEntity<>(userService.save(user), HttpStatus.OK);
+//    }
+//
+//    @PutMapping("/{id}")
+//    public ResponseEntity<UserDTO> deleteUser(@PathVariable Long id) {
+//        UserDTO user = userService.getUserById(id);
+//
+//        if (user == null) {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//        userService.remove(id);
+//        return new ResponseEntity<>(user, HttpStatus.NO_CONTENT);
+//    }
 }
