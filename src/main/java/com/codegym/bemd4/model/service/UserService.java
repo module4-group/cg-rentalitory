@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface UserService {
     List<UserDTO> getUsers();
     UserDTO getUserById(Long userId);
-    UserDTO save(UserDTO UserDTO);
+    UserDTO registerUser(UserDTO UserDTO);
     UserDTO remove(Long id);
     UserDTO findUserByUsername(String username);
     UserDTO findUserByEmail(String email);

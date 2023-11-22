@@ -1,7 +1,9 @@
 package com.codegym.bemd4.model.service.impl;
 
 import com.codegym.bemd4.model.dto.entity.UserDTO;
+import com.codegym.bemd4.model.entity.person.Role;
 import com.codegym.bemd4.model.entity.person.User;
+import com.codegym.bemd4.model.repository.IRoleRepository;
 import com.codegym.bemd4.model.repository.IUserRepository;
 import com.codegym.bemd4.model.service.UserService;
 import jakarta.transaction.Transactional;
@@ -16,12 +18,14 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Service @Transactional
-@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
+
     @Autowired
     private IUserRepository userRepository;
     @Autowired
-    private final ModelMapper modelMapper;
+    private  ModelMapper modelMapper;
+    @Autowired
+    IRoleRepository roleRepository;
 
     @Override
     public List<UserDTO> getUsers() {
@@ -30,44 +34,41 @@ public class UserServiceImpl implements UserService {
                 .map(entity -> modelMapper.map(entity, UserDTO.class))
                 .collect(Collectors.toList());
     }
-
     @Override
     public UserDTO getUserById(Long userId) {
         User user = userRepository.findById(userId).orElse(null);
         return modelMapper.map(user, UserDTO.class);
     }
-
-
     @Override
     public UserDTO remove(Long id) {
-        userRepository.deleteById(id);
-
-        return null;
+        User user= userRepository.findUserById(id);
+        if (user==null){
+            return null;
+        }
+        user.setActivated(false);
+        user = userRepository.save(user);
+        UserDTO removedDTO = modelMapper.map(user, UserDTO.class);
+        return removedDTO;
     }
-
     @Override
     public UserDTO findUserByUsername(String username) {
         User user = userRepository.findUserByUsername(username);
         return modelMapper.map(user, UserDTO.class);
     }
-
-
     @Override
     public UserDTO findUserByEmail(String email) {
         User user = userRepository.findUserByEmail(email);
         return modelMapper.map(user,UserDTO.class);
     }
-
     @Override
-    public UserDTO save(UserDTO userDTO) {
-
+    public UserDTO registerUser(UserDTO userDTO) {
         User user = modelMapper.map(userDTO, User.class);
         user.setActivated(true);
+        Role roleUser = roleRepository.findRoleByName("ROLE_USER");
+        user.getRoles().add(roleUser);
         user = userRepository.save(user);
         UserDTO savedDTO = modelMapper.map(user, UserDTO.class);
         return savedDTO;
-
     }
-
 
 }
