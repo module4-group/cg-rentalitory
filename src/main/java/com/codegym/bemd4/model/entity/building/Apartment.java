@@ -18,15 +18,16 @@ public class Apartment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String name;
+    private String location;
     private String roomNumber;
     private Long area;
     private Long numberOfBedRooms;
     private Long monthlyRent;
     private Integer maxTenants;
+    private boolean activited;
     @ManyToOne (fetch= FetchType.EAGER)
     private Building building;
-    @ManyToOne (fetch= FetchType.EAGER)
-    private Landlord landlord;
 }
 
 
