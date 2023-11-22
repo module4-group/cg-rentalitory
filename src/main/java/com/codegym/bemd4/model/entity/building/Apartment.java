@@ -23,10 +23,9 @@ public class Apartment {
     private Long numberOfBedRooms;
     private Long monthlyRent;
     private Integer maxTenants;
+
     @ManyToOne (fetch= FetchType.EAGER)
     private Building building;
-    @ManyToOne (fetch= FetchType.EAGER)
-    private Landlord landlord;
 }
 
 
