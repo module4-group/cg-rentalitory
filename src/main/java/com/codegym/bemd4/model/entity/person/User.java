@@ -49,7 +49,6 @@ public class User {
     @Email
     private String email;
 
-    @NotBlank
     @Column(name = "address")
     private String address;
 

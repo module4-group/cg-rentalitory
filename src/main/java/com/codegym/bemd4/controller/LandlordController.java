@@ -13,27 +13,27 @@ import java.util.Optional;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/api/user")
-public class UserController {
+@RequestMapping("/api/landlord")
+public class LandlordController {
     @Autowired
-    UserService userService;
+    UserService landlordService;
 
     @GetMapping
     public ResponseEntity<List<UserDTO>> getUsers() {
-        List<UserDTO> UserDTOs = userService.getUsers();
+        List<UserDTO> UserDTOs = landlordService.getUsers();
         if (UserDTOs.isEmpty()) {
             return new ResponseEntity<List<UserDTO>>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(UserDTOs, HttpStatus.OK);
     }
 
-    @PostMapping("/register")
-    public ResponseEntity<UserDTO> registerUser(@RequestBody UserDTO userDTO) {
+    @PostMapping("/save")
+    public ResponseEntity<UserDTO> register(@RequestBody UserDTO user) {
 
-        if (userDTO==null){
+        if (user==null){
             return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(userService.registerUser(userDTO), HttpStatus.OK);
+        return new ResponseEntity<>(userService.save(user), HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
