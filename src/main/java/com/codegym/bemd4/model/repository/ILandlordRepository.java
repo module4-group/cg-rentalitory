@@ -6,4 +6,9 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ILandlordRepository extends JpaRepository<Landlord,Long> {
+    Landlord findLandlordById(Long id);
+
+    Landlord findLandlordByUsername(String username);
+
+    Landlord findLandlordByEmail(String email);
 }
