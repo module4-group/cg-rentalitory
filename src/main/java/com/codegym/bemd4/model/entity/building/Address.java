@@ -23,5 +23,7 @@ public class Address {
     private String district;
     @Column(name="house_number") @NotBlank
     private String houseNumber;
+    @Column(name = "activated", nullable = true)
+    private Boolean activated;
 
 }

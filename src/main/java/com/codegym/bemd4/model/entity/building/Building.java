@@ -22,5 +22,8 @@ public class Building {
     private Address address;
     @OneToOne
     private Landlord landlord;
+    @Column(name = "activated", nullable = true)
+    private Boolean activated;
+
 
 }
