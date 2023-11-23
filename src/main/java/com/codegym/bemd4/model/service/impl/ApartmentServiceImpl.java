@@ -1,6 +1,7 @@
 package com.codegym.bemd4.model.service.impl;
 
 import com.codegym.bemd4.model.dto.entity.ApartmentDTO;
+import com.codegym.bemd4.model.dto.response.ApartmentResponse;
 import com.codegym.bemd4.model.entity.building.Apartment;
 import com.codegym.bemd4.model.repository.IApartmentRepository;
 import com.codegym.bemd4.model.service.ApartmentService;
@@ -8,6 +9,9 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,11 +27,24 @@ public class ApartmentServiceImpl implements ApartmentService {
     private final ModelMapper modelMapper;
 
     @Override
-    public List<ApartmentDTO> getApartments() {
-        List<Apartment> apartmentEntities = apartmentRepository.findAll();
-        return StreamSupport.stream(apartmentEntities.spliterator(), true)
+    public ApartmentResponse getApartments(int pageNo,int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo,pageSize);
+        Page<Apartment> apartmentEntities = apartmentRepository.findAll(pageable);
+
+        List<Apartment> apartments = apartmentEntities.getContent();
+
+        List<ApartmentDTO> content = StreamSupport.stream(apartments.spliterator(), true)
                 .map(entity -> modelMapper.map(entity, ApartmentDTO.class))
                 .collect(Collectors.toList());
+
+        ApartmentResponse apartmentResponse = new ApartmentResponse();
+        apartmentResponse.setContent(content);
+        apartmentResponse.setPageNo(apartmentEntities.getNumber());
+        apartmentResponse.setPageSize(apartmentEntities.getSize());
+        apartmentResponse.setTotalElements(apartmentEntities.getTotalElements());
+        apartmentResponse.setTotalPages(apartmentEntities.getTotalPages());
+        apartmentResponse.setLast(apartmentEntities.isLast());
+        return apartmentResponse;
     }
 
     @Override

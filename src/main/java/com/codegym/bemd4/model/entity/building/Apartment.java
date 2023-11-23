@@ -21,6 +21,7 @@ public class Apartment {
     private String name;
     private String location;
     private String roomNumber;
+    private String numberOfRoom;
     private Long area;
     private Long numberOfBedRooms;
     private Long monthlyRent;
