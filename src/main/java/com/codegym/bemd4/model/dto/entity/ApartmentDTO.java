@@ -6,10 +6,10 @@ import lombok.Data;
 public class ApartmentDTO {
     private Long id;
     private String name;
-    private String location;
     private String roomNumber;
     private Long area;
-    private Long numberOfBedRooms;
+    private Long numberOfBedRoom;
+    private Long numberOfRoom;
     private Long monthlyRent;
     private Integer maxTenants;
     private Long buildingId;

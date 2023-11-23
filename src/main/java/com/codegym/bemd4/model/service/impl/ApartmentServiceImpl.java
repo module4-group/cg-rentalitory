@@ -43,7 +43,7 @@ public class ApartmentServiceImpl implements ApartmentService {
         if (apartment == null) {
             return null;
         }
-        apartment.get().setActivited(false);
+        apartment.get().setActivated(false);
         apartmentRepository.save(apartment.get());
         ApartmentDTO apartmentDTO = modelMapper.map(apartment, ApartmentDTO.class);
         return apartmentDTO;
