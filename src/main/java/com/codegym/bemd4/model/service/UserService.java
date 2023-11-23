@@ -13,4 +13,6 @@ public interface UserService {
     UserDTO remove(Long id);
     UserDTO findUserByUsername(String username);
     UserDTO findUserByEmail(String email);
+
+    List<UserDTO> searchUsersByNameContains(String name);
 }

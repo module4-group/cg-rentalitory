@@ -46,4 +46,14 @@ public class UserController {
         userService.remove(id);
         return new ResponseEntity<>(user, HttpStatus.NO_CONTENT);
     }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<UserDTO>> searchUsersByName(
+            @RequestParam String name
+    ) {
+        List<UserDTO> users = userService.searchUsersByNameContains(name);
+        return ResponseEntity.ok(users);
+
+    }
+
 }

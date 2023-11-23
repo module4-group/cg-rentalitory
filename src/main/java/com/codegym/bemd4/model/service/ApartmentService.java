@@ -8,6 +8,6 @@ import java.util.List;
 public interface ApartmentService {
     List<ApartmentDTO> getApartments();
     ApartmentDTO getApartmentById(Long apartmentId);
-    void save(Apartment Apartment);
-    void remove(Long id);
+    Apartment save(Apartment Apartment);
+    ApartmentDTO remove(Long id);
 }

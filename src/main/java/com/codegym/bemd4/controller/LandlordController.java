@@ -48,5 +48,4 @@ public class LandlordController {
         landlordService.remove(id);
         return new ResponseEntity<>(landlord, HttpStatus.NO_CONTENT);
     }
-
 }

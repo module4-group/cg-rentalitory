@@ -31,11 +31,6 @@ public class AppConfig implements WebMvcConfigurer {
         ModelMapper modelMapper= new ModelMapper();
         modelMapper.getConfiguration()
                 .setMatchingStrategy(MatchingStrategies.STANDARD);
-
-//        modelMapper.createTypeMap(Apartment::getLandlord, ApartmentDTO::setLandlordId);
-//
-//        modelMapper.validate();
         return modelMapper;
-
     }
 }

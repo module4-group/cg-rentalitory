@@ -31,7 +31,6 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Role> roles = new HashSet<Role>();
-
     @NotBlank
     @Column(name = "fullname", length = 200, nullable = false)
     private String fullName;
@@ -61,7 +60,7 @@ public class User {
             columnDefinition = "text", nullable = true)
     private String avatar;
 
-    @Column(name = "activated", nullable = true)
+    @Column(name = "activated", nullable = false,  columnDefinition = "BIT default true")
     private Boolean activated;
 
 }

@@ -61,6 +61,14 @@ public class UserServiceImpl implements UserService {
         return modelMapper.map(user,UserDTO.class);
     }
     @Override
+    public List<UserDTO> searchUsersByNameContains(String name) {
+        List<User> userEntities= userRepository.findByUsernameContainsIgnoreCase(name);
+        return StreamSupport.stream(userEntities.spliterator(), true)
+                .map(entity -> modelMapper.map(entity, UserDTO.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public UserDTO registerUser(UserDTO userDTO) {
         User user = modelMapper.map(userDTO, User.class);
         user.setActivated(true);
@@ -70,5 +78,7 @@ public class UserServiceImpl implements UserService {
         UserDTO savedDTO = modelMapper.map(user, UserDTO.class);
         return savedDTO;
     }
+
+
 
 }

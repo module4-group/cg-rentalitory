@@ -62,9 +62,7 @@ public class Landlord {
             columnDefinition = "text", nullable = true)
     private String avatar;
 
-    @OneToMany(mappedBy="landlord")
-    private List<Apartment> apartments;
 
-    @Column(name = "activated", nullable = true)
+    @Column(name = "activated", nullable = false, columnDefinition = "BIT default true")
     private Boolean activated;
 }
