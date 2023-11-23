@@ -63,6 +63,6 @@ public class Landlord {
     private String avatar;
 
 
-    @Column(name = "activated", nullable = true)
+    @Column(name = "activated", nullable = false, columnDefinition = "BIT default true")
     private Boolean activated;
 }

@@ -18,15 +18,25 @@ public class Apartment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "apartment_name", length = 56, nullable = false)
     private String name;
-    private String location;
+    @Column(name = "room_number", length = 10, nullable = false)
     private String roomNumber;
+    @Column(name = "area", nullable = false)
     private Long area;
-    private Long numberOfBedRooms;
+    @Column(name = "number_of_bedroom", nullable = false)
+    private Long numberOfBedroom;
+    @Column(name = "number_of_room", nullable = false)
+    private Long numberOfRoom;
+    @Column(name = "monthly_rent", nullable = false)
     private Long monthlyRent;
+    @Column(name = "max_tenants", nullable = false)
     private Integer maxTenants;
-    private boolean activited;
-    @ManyToOne (fetch= FetchType.EAGER)
+    @Column(name = "activated", nullable = false, columnDefinition = "BIT default true")
+    private boolean activated;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "building_id")
     private Building building;
 }
 

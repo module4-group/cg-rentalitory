@@ -10,6 +10,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -42,12 +43,11 @@ public class ApartmentServiceImpl implements ApartmentService {
         if (apartment == null) {
             return null;
         }
-        apartment.get().setActivited(false);
+        apartment.get().setActivated(false);
         apartmentRepository.save(apartment.get());
         ApartmentDTO apartmentDTO = modelMapper.map(apartment, ApartmentDTO.class);
         return apartmentDTO;
     }
-
     @Override
     public Apartment save(Apartment apartment) {
         return apartmentRepository.save(apartment);

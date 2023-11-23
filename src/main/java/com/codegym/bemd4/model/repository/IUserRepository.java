@@ -17,4 +17,6 @@ public interface IUserRepository extends JpaRepository<User, Long> {
             "JOIN User u " +
             "WHERE u.username = :username")
     List<String> findRolesByUsername(@Param("username") String username);
+
+    List<User> findByUsernameContainsIgnoreCase(String username);
 }
