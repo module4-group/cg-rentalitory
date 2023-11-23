@@ -25,5 +25,8 @@ public class Building {
     @OneToOne
     @JoinColumn(name= "landlord_id")
     private Landlord landlord;
+    @Column(name = "activated", nullable = true)
+    private Boolean activated;
+
 
 }
