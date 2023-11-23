@@ -2,6 +2,7 @@ package com.codegym.bemd4.controller;
 
 
 import com.codegym.bemd4.model.dto.entity.ApartmentDTO;
+import com.codegym.bemd4.model.dto.response.ApartmentResponse;
 import com.codegym.bemd4.model.entity.building.Apartment;
 import com.codegym.bemd4.model.service.ApartmentService;
 import lombok.RequiredArgsConstructor;
@@ -24,8 +25,11 @@ public class ApartmentController {
     private ApartmentService apartmentService;
 
     @GetMapping
-    public ResponseEntity<Iterable<ApartmentDTO>> getApartments() {
-        List<ApartmentDTO> apartments = apartmentService.getApartments();
+    public ResponseEntity<ApartmentResponse> getApartments(
+            @RequestParam(value = "pageNo", defaultValue = "0",required = false) int pageNo,
+            @RequestParam(value = "pageSize", defaultValue = "10",required = false) int pageSize
+    ) {
+        ApartmentResponse apartments = apartmentService.getApartments(pageNo,pageSize);
         return new ResponseEntity<>(apartments, HttpStatus.OK);
     }
 
