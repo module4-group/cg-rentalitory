@@ -8,4 +8,5 @@ import java.util.List;
 
 @Repository
 public interface IApartmentRepository extends JpaRepository<Apartment, Long> {
+List<Apartment> findAllByNameContainsIgnoreCase(String name);
 }
