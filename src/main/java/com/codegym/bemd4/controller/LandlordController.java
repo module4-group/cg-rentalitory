@@ -17,7 +17,6 @@ import java.util.Optional;
 public class LandlordController {
     @Autowired
     UserService landlordService;
-
 //    @GetMapping
 //    public ResponseEntity<List<UserDTO>> getUsers() {
 //        List<UserDTO> UserDTOs = landlordService.getUsers();

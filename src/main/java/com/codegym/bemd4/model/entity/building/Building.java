@@ -17,10 +17,13 @@ public class Building {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "building_name", length = 200, nullable = false)
     private String buildingName;
     @OneToOne
+    @JoinColumn(name= "address_id")
     private Address address;
     @OneToOne
+    @JoinColumn(name= "landlord_id")
     private Landlord landlord;
 
 }
