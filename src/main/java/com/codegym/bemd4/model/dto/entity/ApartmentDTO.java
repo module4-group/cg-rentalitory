@@ -7,7 +7,6 @@ public class ApartmentDTO {
     private Long id;
     private String name;
     private String roomNumber;
-    private String numberOfRoom;
     private Long area;
     private Long numberOfBedRoom;
     private Long numberOfRoom;
