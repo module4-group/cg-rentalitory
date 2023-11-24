@@ -47,7 +47,6 @@ public class ApartmentController {
     public ResponseEntity<Apartment> createApartment(@RequestBody Apartment apartment) {
         return new ResponseEntity<>(apartmentService.save(apartment), HttpStatus.OK);
     }
-
     @PutMapping("{id}")
     public ResponseEntity<Apartment> updateApartment(@PathVariable Long id, @RequestBody Apartment apartment) {
         Optional<ApartmentDTO> apartmentOptional = Optional.ofNullable(apartmentService.getApartmentById(id));
@@ -57,7 +56,6 @@ public class ApartmentController {
         apartment.setId(apartmentOptional.get().getId());
         return new ResponseEntity<>(apartmentService.save(apartment), HttpStatus.OK);
     }
-
     @DeleteMapping("{id}")
     public ResponseEntity<Apartment> deleteApartment(@PathVariable Long id) {
         Optional<ApartmentDTO> apartmentOptional = Optional.ofNullable(apartmentService.getApartmentById(id));

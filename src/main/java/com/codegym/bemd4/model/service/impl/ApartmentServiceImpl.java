@@ -49,7 +49,6 @@ public class ApartmentServiceImpl implements ApartmentService {
         apartmentResponse.setLast(apartmentEntities.isLast());
         return apartmentResponse;
     }
-
     @Override
     public List<ApartmentDTO> getAllApartments() {
         Iterable<Apartment> apartmentEntities = apartmentRepository.findAll();
