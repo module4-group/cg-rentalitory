@@ -25,7 +25,6 @@ public class AddressController {
         }
         return new ResponseEntity<>(AddressDTOs, HttpStatus.OK);
     }
-
     @PostMapping("/create")
     public ResponseEntity<AddressDTO> createAddress(@RequestBody AddressDTO addressDTO ){
         if (addressDTO==null){
@@ -33,8 +32,7 @@ public class AddressController {
         }
         return new ResponseEntity<>(addressService.createAddress(addressDTO), HttpStatus.OK);
     }
-
-    @PutMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<AddressDTO> deleteAddress(@PathVariable Long id) {
         AddressDTO address = addressService.getAddressById(id);
 
@@ -42,6 +40,16 @@ public class AddressController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         addressService.remove(id);
+        return new ResponseEntity<>(address, HttpStatus.NO_CONTENT);
+    }
+    @PutMapping
+    public ResponseEntity<AddressDTO> updateAddress(@PathVariable Long id) {
+        AddressDTO address = addressService.getAddressById(id);
+
+        if (address == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        addressService.update(id);
         return new ResponseEntity<>(address, HttpStatus.NO_CONTENT);
     }
 }

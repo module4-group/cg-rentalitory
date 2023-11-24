@@ -34,7 +34,7 @@ public class BuildingController {
         return new ResponseEntity<>(buildingService.createBuilding(buildingDTO), HttpStatus.OK);
     }
 
-    @PutMapping("/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<BuildingDTO> deleteBuilding(@PathVariable Long id) {
         BuildingDTO building = buildingService.getBuildingById(id);
 

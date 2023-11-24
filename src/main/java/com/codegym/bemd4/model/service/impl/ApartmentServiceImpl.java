@@ -47,7 +47,6 @@ public class ApartmentServiceImpl implements ApartmentService {
         apartmentResponse.setLast(apartmentEntities.isLast());
         return apartmentResponse;
     }
-
     @Override
     public ApartmentDTO getApartmentById(Long apartmentId) {
         Apartment apartment = apartmentRepository.findById(apartmentId).orElse(null);

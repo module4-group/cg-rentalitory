@@ -10,4 +10,5 @@ public interface AddressService {
     AddressDTO getAddressById(Long addressId);
     AddressDTO createAddress(AddressDTO addressDTO);
     AddressDTO remove(Long id);
+    AddressDTO update(Long id);
 }
