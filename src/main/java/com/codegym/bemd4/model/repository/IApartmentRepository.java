@@ -4,6 +4,8 @@ import com.codegym.bemd4.model.entity.building.Apartment;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -25,9 +27,7 @@ public interface IApartmentRepository extends JpaRepository<Apartment, Long> {
             " AND ad.district LIKE :district")
     List<Apartment> findAllByCityAndDistrict(String district,String city);
 
-
-
-
-
-
+    Page<Apartment> findByPriceBetween(Long minMonthlyRent, Long maxMonthlyRent,Pageable pageable);
+    Page<Apartment> findByPriceGreaterThanEqual(Long minMonthlyRent, Pageable pageable);
+    Page<Apartment> findByPriceLessThanEqual(Long maxMonthlyRent,Pageable pageable);
 }

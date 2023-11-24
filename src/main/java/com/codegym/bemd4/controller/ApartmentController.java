@@ -8,6 +8,9 @@ import com.codegym.bemd4.model.entity.building.Apartment;
 import com.codegym.bemd4.model.service.ApartmentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,16 +29,16 @@ public class ApartmentController {
 
     @GetMapping
     public ResponseEntity<ApartmentResponse> getApartments(
-            @RequestParam(value = "pageNo", defaultValue = "0",required = false) int pageNo,
-            @RequestParam(value = "pageSize", defaultValue = "10",required = false) int pageSize
+            @RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
+            @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize
     ) {
-        ApartmentResponse apartments = apartmentService.getApartments(pageNo,pageSize);
+        ApartmentResponse apartments = apartmentService.getApartments(pageNo, pageSize);
         return new ResponseEntity<>(apartments, HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<Apartment> createApartment(@RequestBody Apartment apartment) {
-        return new ResponseEntity<>(apartmentService.save(apartment),HttpStatus.OK);
+        return new ResponseEntity<>(apartmentService.save(apartment), HttpStatus.OK);
     }
 
     @PutMapping("{id}")
@@ -61,12 +64,23 @@ public class ApartmentController {
     @GetMapping("/search")
     public ResponseEntity<List<Apartment>> searchApartmentsByCityAndDistrict(
             @RequestParam("city") String city,
-            @RequestParam(value = "district", defaultValue = "") String district){
+            @RequestParam(value = "district", defaultValue = "") String district) {
 
         List<Apartment> apartments = apartmentService.searchApartmentsByCityAndDistrict(city, district);
         return ResponseEntity.ok(apartments);
     }
 
-//    @GetMapping("/sort")
+    @GetMapping("/sort")
+    public ResponseEntity<List<ApartmentDTO>> filterBuildingByPrice(
+            @RequestParam(name = "minMonthlyRent", required = false) Long maxMonthlyRent,
+            @RequestParam(name = "maxMonthlyRent", required = false) Long minMonthlyRent,
+            @RequestParam(defaultValue = "5") int size,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "price") String sortBy) {
 
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy).ascending());
+        List<ApartmentDTO> filterResults = apartmentService.filterApartmentByMonthlyRent(minMonthlyRent, maxMonthlyRent, pageable);
+
+        return new ResponseEntity<>(filterResults, HttpStatus.OK);
+    }
 }

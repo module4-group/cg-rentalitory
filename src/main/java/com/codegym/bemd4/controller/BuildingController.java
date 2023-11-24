@@ -49,11 +49,5 @@ public class BuildingController {
         return new ResponseEntity<>(building, HttpStatus.NO_CONTENT);
     }
 
-//    @GetMapping("/search")
-//    public ResponseEntity<List<BuildingDTO>> searchBuildingsByName(
-//            @RequestParam String name
-//    ) {
-//        List<BuildingDTO> buildings = buildingService.searchBuildingsByNameContains(name);
-//        return ResponseEntity.ok(buildings);
-//    }
+
 }

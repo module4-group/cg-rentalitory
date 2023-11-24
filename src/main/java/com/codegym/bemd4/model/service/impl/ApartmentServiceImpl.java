@@ -80,4 +80,9 @@ public class ApartmentServiceImpl implements ApartmentService {
         return apartmentRepository.findAllByCityAndDistrict(city, district);
     }
 
+    @Override
+    public List<ApartmentDTO> filterApartmentByMonthlyRent(Long minMonthlyRent, Long maxMonthlyRent, Pageable pageable) {
+        return null;
+    }
+
 }
