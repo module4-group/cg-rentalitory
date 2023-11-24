@@ -1,7 +1,9 @@
 package com.codegym.bemd4.controller;
 
 
+import com.codegym.bemd4.model.dto.entity.AddressDTO;
 import com.codegym.bemd4.model.dto.entity.ApartmentDTO;
+import com.codegym.bemd4.model.dto.entity.UserDTO;
 import com.codegym.bemd4.model.dto.response.ApartmentResponse;
 import com.codegym.bemd4.model.entity.building.Apartment;
 import com.codegym.bemd4.model.service.ApartmentService;
@@ -11,7 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,18 +25,27 @@ public class ApartmentController {
     @Autowired
     private ApartmentService apartmentService;
 
+//    @GetMapping
+//    public ResponseEntity<List<ApartmentDTO>> getAllApartment() {
+//        List<ApartmentDTO> apartmentDTOS = apartmentService.getAllApartments();
+//        if (apartmentDTOS.isEmpty()) {
+//            return new ResponseEntity<List<ApartmentDTO>>(HttpStatus.NO_CONTENT);
+//        }
+//        return new ResponseEntity<>(apartmentDTOS, HttpStatus.OK);
+//    }
+
     @GetMapping
     public ResponseEntity<ApartmentResponse> getApartments(
-            @RequestParam(value = "pageNo", defaultValue = "0",required = false) int pageNo,
-            @RequestParam(value = "pageSize", defaultValue = "10",required = false) int pageSize
+            @RequestParam(value = "pageNo",defaultValue = "0", required = false) int pageNo,
+            @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize
     ) {
-        ApartmentResponse apartments = apartmentService.getApartments(pageNo,pageSize);
+        ApartmentResponse apartments = apartmentService.getApartments(pageNo, pageSize);
         return new ResponseEntity<>(apartments, HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<Apartment> createApartment(@RequestBody Apartment apartment) {
-        return new ResponseEntity<>(apartmentService.save(apartment),HttpStatus.OK);
+        return new ResponseEntity<>(apartmentService.save(apartment), HttpStatus.OK);
     }
     @PutMapping("{id}")
     public ResponseEntity<Apartment> updateApartment(@PathVariable Long id, @RequestBody Apartment apartment) {
@@ -55,5 +65,16 @@ public class ApartmentController {
         apartmentService.remove(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<Apartment>> searchApartmentsByCityAndDistrict(
+            @RequestParam("city") String city,
+            @RequestParam(value = "district", defaultValue = "") String district){
+
+        List<Apartment> apartments = apartmentService.searchApartmentsByCityAndDistrict(city, district);
+        return ResponseEntity.ok(apartments);
+    }
+
+//    @GetMapping("/sort")
 
 }

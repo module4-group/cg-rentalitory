@@ -3,6 +3,7 @@ package com.codegym.bemd4.model.service.impl;
 import com.codegym.bemd4.model.dto.entity.BuildingDTO;
 import com.codegym.bemd4.model.dto.entity.UserDTO;
 import com.codegym.bemd4.model.entity.building.Building;
+import com.codegym.bemd4.model.entity.person.User;
 import com.codegym.bemd4.model.repository.IBuildingRepository;
 import com.codegym.bemd4.model.service.BuildingService;
 import jakarta.transaction.Transactional;
@@ -59,4 +60,12 @@ public class BuildingServiceImpl implements BuildingService {
         BuildingDTO removedDTO = modelMapper.map(building, BuildingDTO.class);
         return removedDTO;
     }
+
+//    @Override
+//    public List<BuildingDTO> searchBuildingsByNameContains(String name) {
+//        List<Building> buildingEntities= buildingRepository.findByNameContainsIgnoreCase(name);
+//        return StreamSupport.stream(buildingEntities.spliterator(), true)
+//                .map(entity -> modelMapper.map(entity, BuildingDTO.class))
+//                .collect(Collectors.toList());
+//    }
 }

@@ -2,6 +2,7 @@ package com.codegym.bemd4.model.service.impl;
 
 import com.codegym.bemd4.model.dto.entity.LandlordDTO;
 import com.codegym.bemd4.model.dto.entity.UserDTO;
+import com.codegym.bemd4.model.entity.building.Building;
 import com.codegym.bemd4.model.entity.person.Landlord;
 import com.codegym.bemd4.model.entity.person.Role;
 import com.codegym.bemd4.model.entity.person.User;
@@ -76,5 +77,13 @@ public class LandlordServiceImpl implements LandlordService {
     public LandlordDTO findLandlordByEmail(String email) {
         Landlord landlord = landlordRepository.findLandlordByEmail(email);
         return modelMapper.map(landlord,LandlordDTO.class);
+    }
+
+    @Override
+    public List<LandlordDTO> searchLandlordsByNameContains(String name) {
+        List<Landlord> landlordEntities= landlordRepository.findByUsernameContainsIgnoreCase(name);
+        return StreamSupport.stream(landlordEntities.spliterator(), true)
+                .map(entity -> modelMapper.map(entity, LandlordDTO.class))
+                .collect(Collectors.toList());
     }
 }

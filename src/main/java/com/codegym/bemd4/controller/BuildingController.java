@@ -1,7 +1,9 @@
 package com.codegym.bemd4.controller;
 
+import com.codegym.bemd4.model.dto.entity.ApartmentDTO;
 import com.codegym.bemd4.model.dto.entity.BuildingDTO;
 import com.codegym.bemd4.model.dto.entity.UserDTO;
+import com.codegym.bemd4.model.entity.building.Apartment;
 import com.codegym.bemd4.model.service.BuildingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,10 +11,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("api/building")
+@RequestMapping("/api/building")
 public class BuildingController {
     @Autowired
     BuildingService buildingService;
@@ -33,7 +36,6 @@ public class BuildingController {
         }
         return new ResponseEntity<>(buildingService.createBuilding(buildingDTO), HttpStatus.OK);
     }
-
     @DeleteMapping("/{id}")
     public ResponseEntity<BuildingDTO> deleteBuilding(@PathVariable Long id) {
         BuildingDTO building = buildingService.getBuildingById(id);

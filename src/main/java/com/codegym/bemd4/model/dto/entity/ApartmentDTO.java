@@ -12,5 +12,6 @@ public class ApartmentDTO {
     private Long numberOfRoom;
     private Long monthlyRent;
     private Integer maxTenants;
+    private Boolean activated;
     private Long buildingId;
 }

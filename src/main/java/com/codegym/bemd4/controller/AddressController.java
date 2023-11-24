@@ -12,27 +12,27 @@ import java.util.List;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("api/address")
+@RequestMapping("/api/address")
 public class AddressController {
     @Autowired
     AddressService addressService;
 
     @GetMapping
-    public ResponseEntity<List<AddressDTO>> getAddress(){
-        List<AddressDTO> AddressDTOs = addressService.getAddress();
-        if (AddressDTOs.isEmpty()){
-            return new ResponseEntity<List<AddressDTO>>(HttpStatus.NO_CONTENT);
+    public ResponseEntity<List<AddressDTO>> getAddress() {
+        List<AddressDTO> addressDTOs = addressService.getAddress();
+        if (addressDTOs.isEmpty()) {
+            return new ResponseEntity<>(addressDTOs, HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<>(AddressDTOs, HttpStatus.OK);
+        return new ResponseEntity<>(addressDTOs, HttpStatus.OK);
     }
     @PostMapping("/create")
-    public ResponseEntity<AddressDTO> createAddress(@RequestBody AddressDTO addressDTO ){
-        if (addressDTO==null){
-            return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
+    public ResponseEntity<AddressDTO> createAddress(@RequestBody AddressDTO addressDTO) {
+        if (addressDTO == null) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(addressService.createAddress(addressDTO), HttpStatus.OK);
     }
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("delete/{id}")
     public ResponseEntity<AddressDTO> deleteAddress(@PathVariable Long id) {
         AddressDTO address = addressService.getAddressById(id);
 

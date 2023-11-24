@@ -10,7 +10,7 @@ public class UserDTO {
     private String username;
     private String password;
     private String email;
-    private Address address;
     private String phoneNumber;
     private String avatar;
+    private Boolean activated;
 }
