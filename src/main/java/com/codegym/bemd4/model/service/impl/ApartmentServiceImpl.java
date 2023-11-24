@@ -1,5 +1,6 @@
 package com.codegym.bemd4.model.service.impl;
 
+import com.codegym.bemd4.model.dto.entity.AddressDTO;
 import com.codegym.bemd4.model.dto.entity.ApartmentDTO;
 import com.codegym.bemd4.model.dto.response.ApartmentResponse;
 import com.codegym.bemd4.model.entity.building.Apartment;
@@ -14,6 +15,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -69,4 +71,13 @@ public class ApartmentServiceImpl implements ApartmentService {
     public Apartment save(Apartment apartment) {
         return apartmentRepository.save(apartment);
     }
+    @Override
+    public List<Apartment> searchApartmentsByCity(String city) {
+        return apartmentRepository.findAllByCity(city);
+    }
+    @Override
+    public List<Apartment> searchApartmentsByCityAndDistrict(String city, String district) {
+        return apartmentRepository.findAllByCityAndDistrict(city, district);
+    }
+
 }

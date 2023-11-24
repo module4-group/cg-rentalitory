@@ -53,7 +53,6 @@ public class UserController {
     ) {
         List<UserDTO> users = userService.searchUsersByNameContains(name);
         return ResponseEntity.ok(users);
-
     }
 
 }
