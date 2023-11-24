@@ -19,10 +19,10 @@ public class Apartment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "apartment_name", length = 56, nullable = false)
+    @Column(name = "", length = 56, nullable = false)
     private String name;
     @Column(name = "room_number", length = 10, nullable = false)
-    private String roomNumber;
+    private Long roomNumber;
     @Column(name = "area", nullable = false)
     private Long area;
     @Column(name = "number_of_bedroom", nullable = false)
@@ -38,6 +38,7 @@ public class Apartment {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "building_id")
     private Building building;
+
 }
 
 

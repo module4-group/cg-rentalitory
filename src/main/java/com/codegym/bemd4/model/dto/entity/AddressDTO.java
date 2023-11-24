@@ -9,5 +9,8 @@ public class AddressDTO {
     private Long id;
     private String city;
     private String district;
+    private String ward;
     private String houseNumber;
+    private Boolean activated;
+
 }
