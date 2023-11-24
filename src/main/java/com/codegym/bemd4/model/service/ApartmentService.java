@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface ApartmentService {
     ApartmentResponse getApartments(int pageNo, int pageSize);
+    List<ApartmentDTO> getAllApartments();
     ApartmentDTO getApartmentById(Long apartmentId);
     Apartment save(Apartment Apartment);
     ApartmentDTO remove(Long id);

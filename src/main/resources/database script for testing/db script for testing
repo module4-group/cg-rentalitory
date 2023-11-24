@@ -21,9 +21,9 @@ insert into buildings(building_name,address_id,landlord_id) values("dat building
 insert into buildings(building_name,address_id,landlord_id) values("nhan building",5,3);
 insert into buildings(building_name,address_id,landlord_id) values("thang building",6,2);
 
-insert into apartment(activated,area,max_tenants,monthly_rent,`apartment_name`,number_of_bedroom,number_of_room,room_number,building_id) values(true,200,3,2500000,"dat",5,4,201,1);
-insert into apartment(activated,area,max_tenants,monthly_rent,`apartment_name`,number_of_bedroom,number_of_room,room_number,building_id) values(true,150,4,1500000,"thinh",2,4,202,6);
-insert into apartment(activated,area,max_tenants,monthly_rent,`apartment_name`,number_of_bedroom,number_of_room,room_number,building_id) values(true,124,7,1200000,"thang",2,4,203,4);
-insert into apartment(activated,area,max_tenants,monthly_rent,`apartment_name`,number_of_bedroom,number_of_room,room_number,building_id) values(true,80,1,2100000,"nhan",5,3,204,5);
-insert into apartment(activated,area,max_tenants,monthly_rent,`apartment_name`,number_of_bedroom,number_of_room,room_number,building_id) values(true,90,2,3400000,"kiet",5,7,205,2);
-insert into apartment(activated,area,max_tenants,monthly_rent,`apartment_name`,number_of_bedroom,number_of_room,room_number,building_id) values(true,250,9,5500000,"phuc",5,3,206,3);
+insert into apartment(activated,area,max_tenants,monthly_rent,`apartment_name`,number_of_bedroom,number_of_room,room_number,building_id) values(true,200,3,2500000,"dat",3,5,4,201,1);
+insert into apartment(activated,area,max_tenants,monthly_rent,`apartment_name`,number_of_bedroom,number_of_room,room_number,building_id) values(true,150,4,1500000,"thinh",4,2,4,202,6);
+insert into apartment(activated,area,max_tenants,monthly_rent,`apartment_name`,number_of_bedroom,number_of_room,room_number,building_id) values(true,124,7,1200000,"thang",8,2,4,203,4);
+insert into apartment(activated,area,max_tenants,monthly_rent,`apartment_name`,number_of_bedroom,number_of_room,room_number,building_id) values(true,80,1,2100000,"nhan",1,5,3,204,5);
+insert into apartment(activated,area,max_tenants,monthly_rent,`apartment_name`,number_of_bedroom,number_of_room,room_number,building_id) values(true,90,2,3400000,"kiet",6,5,7,205,2);
+insert into apartment(activated,area,max_tenants,monthly_rent,`apartment_name`,number_of_bedroom,number_of_room,room_number,building_id) values(true,250,9,5500000,"phuc",5,5,3,206,3);
