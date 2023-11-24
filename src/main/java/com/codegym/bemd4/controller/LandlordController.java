@@ -23,7 +23,6 @@ import java.util.Optional;
 public class LandlordController {
     @Autowired
     LandlordService landlordService;
-
     @GetMapping
     public ResponseEntity<List<LandlordDTO>> getUsers() {
         List<LandlordDTO> LandlordDTOs = landlordService.getLandlord();

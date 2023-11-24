@@ -23,6 +23,8 @@ public class Address {
     private String district;
     @Column(name="house_number") @NotBlank
     private String houseNumber;
+    @Column(name="ward") @NotBlank
+    private String ward;
     @Column(name = "activated", nullable = false, columnDefinition = "BIT default true")
     private Boolean activated;
 

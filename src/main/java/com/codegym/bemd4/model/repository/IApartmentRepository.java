@@ -14,6 +14,7 @@ import java.util.List;
 
 @Repository
 public interface IApartmentRepository extends JpaRepository<Apartment, Long> {
+    List<Apartment> findAllByNameContainsIgnoreCase(String name);
     @Query( "SELECT a FROM Apartment a " +
             "JOIN a.building b " +
             "JOIN b.address ad " +
@@ -30,4 +31,5 @@ public interface IApartmentRepository extends JpaRepository<Apartment, Long> {
     Page<Apartment> findByPriceBetween(Long minMonthlyRent, Long maxMonthlyRent,Pageable pageable);
     Page<Apartment> findByPriceGreaterThanEqual(Long minMonthlyRent, Pageable pageable);
     Page<Apartment> findByPriceLessThanEqual(Long maxMonthlyRent,Pageable pageable);
+
 }

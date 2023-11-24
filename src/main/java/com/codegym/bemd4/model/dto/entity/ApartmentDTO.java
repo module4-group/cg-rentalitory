@@ -8,9 +8,10 @@ public class ApartmentDTO {
     private String name;
     private String roomNumber;
     private Long area;
-    private Long numberOfBedRoom;
+    private Long numberOfBedroom;
     private Long numberOfRoom;
     private Long monthlyRent;
     private Integer maxTenants;
+    private Boolean activated;
     private Long buildingId;
 }

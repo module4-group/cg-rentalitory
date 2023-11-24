@@ -36,8 +36,6 @@ public class BuildingController {
         }
         return new ResponseEntity<>(buildingService.createBuilding(buildingDTO), HttpStatus.OK);
     }
-
-
     @DeleteMapping("/{id}")
     public ResponseEntity<BuildingDTO> deleteBuilding(@PathVariable Long id) {
         BuildingDTO building = buildingService.getBuildingById(id);
@@ -48,6 +46,4 @@ public class BuildingController {
         buildingService.remove(id);
         return new ResponseEntity<>(building, HttpStatus.NO_CONTENT);
     }
-
-
 }
