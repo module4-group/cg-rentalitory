@@ -1,7 +1,11 @@
 package com.codegym.bemd4.controller;
 
+import com.codegym.bemd4.model.dto.entity.ApartmentDTO;
+import com.codegym.bemd4.model.dto.entity.BuildingDTO;
 import com.codegym.bemd4.model.dto.entity.LandlordDTO;
 import com.codegym.bemd4.model.dto.entity.UserDTO;
+import com.codegym.bemd4.model.entity.building.Apartment;
+import com.codegym.bemd4.model.entity.building.Building;
 import com.codegym.bemd4.model.entity.person.User;
 import com.codegym.bemd4.model.service.LandlordService;
 import com.codegym.bemd4.model.service.UserService;
@@ -38,7 +42,7 @@ public class LandlordController {
         return new ResponseEntity<>(landlordService.registerLandlord(landlordDTO), HttpStatus.OK);
     }
 
-    @PutMapping("/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<LandlordDTO> deleteLandlord(@PathVariable Long id) {
         LandlordDTO landlord = landlordService.getLandlordById(id);
 
@@ -47,5 +51,13 @@ public class LandlordController {
         }
         landlordService.remove(id);
         return new ResponseEntity<>(landlord, HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<LandlordDTO>> searchLandlordsByName(
+            @RequestParam String name
+    ) {
+        List<LandlordDTO> landlords  = landlordService.searchLandlordsByNameContains(name);
+        return ResponseEntity.ok(landlords);
     }
 }

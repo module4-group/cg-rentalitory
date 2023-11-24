@@ -12,4 +12,6 @@ public interface LandlordService {
     LandlordDTO remove(Long id);
     LandlordDTO findLandlordByUsername(String username);
     LandlordDTO findLandlordByEmail(String email);
+
+    List<LandlordDTO> searchLandlordsByNameContains(String name);
 }

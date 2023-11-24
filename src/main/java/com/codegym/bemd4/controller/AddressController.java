@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("api/address")
+@RequestMapping("/api/address")
 public class AddressController {
     @Autowired
     AddressService addressService;
@@ -34,8 +34,7 @@ public class AddressController {
         return new ResponseEntity<>(addressService.createAddress(addressDTO), HttpStatus.OK);
     }
 
-
-    @DeleteMapping("/{id}")
+    @DeleteMapping("delete/{id}")
     public ResponseEntity<AddressDTO> deleteAddress(@PathVariable Long id) {
         AddressDTO address = addressService.getAddressById(id);
 
