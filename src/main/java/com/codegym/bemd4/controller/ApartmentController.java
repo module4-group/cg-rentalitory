@@ -1,10 +1,10 @@
 package com.codegym.bemd4.controller;
 
 
-import com.codegym.bemd4.model.dto.entity.AddressDTO;
 import com.codegym.bemd4.model.dto.entity.ApartmentDTO;
-import com.codegym.bemd4.model.dto.entity.UserDTO;
+import com.codegym.bemd4.model.dto.request.ApartmentRequestDTO;
 import com.codegym.bemd4.model.dto.response.ApartmentResponse;
+import com.codegym.bemd4.model.dto.response.ApartmentResponseDTO;
 import com.codegym.bemd4.model.entity.building.Apartment;
 import com.codegym.bemd4.model.service.ApartmentService;
 import lombok.RequiredArgsConstructor;
@@ -43,19 +43,21 @@ public class ApartmentController {
         return new ResponseEntity<>(apartments, HttpStatus.OK);
     }
 
-    @PostMapping
-    public ResponseEntity<Apartment> createApartment(@RequestBody Apartment apartment) {
-        return new ResponseEntity<>(apartmentService.save(apartment), HttpStatus.OK);
+    @PostMapping("/add")
+    public ResponseEntity<Apartment> createApartment(@RequestBody ApartmentRequestDTO apartmentDTO) {
+
+        Apartment newApartment = apartmentService.create(apartmentDTO);
+        return new ResponseEntity<>(newApartment,HttpStatus.CREATED);
     }
-    @PutMapping("{id}")
-    public ResponseEntity<Apartment> updateApartment(@PathVariable Long id, @RequestBody Apartment apartment) {
-        Optional<ApartmentDTO> apartmentOptional = Optional.ofNullable(apartmentService.getApartmentById(id));
-        if (!apartmentOptional.isPresent()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        apartment.setId(apartmentOptional.get().getId());
-        return new ResponseEntity<>(apartmentService.save(apartment), HttpStatus.OK);
-    }
+//    @PutMapping("{id}")
+//    public ResponseEntity<Apartment> updateApartment(@PathVariable Long id, @RequestBody Apartment apartment) {
+//        Optional<ApartmentDTO> apartmentOptional = Optional.ofNullable(apartmentService.getApartmentById(id));
+//        if (!apartmentOptional.isPresent()) {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//        apartment.setId(apartmentOptional.get().getId());
+//        return new ResponseEntity<>(apartmentService.save(apartment), HttpStatus.OK);
+//    }
     @DeleteMapping("{id}")
     public ResponseEntity<Apartment> deleteApartment(@PathVariable Long id) {
         Optional<ApartmentDTO> apartmentOptional = Optional.ofNullable(apartmentService.getApartmentById(id));
