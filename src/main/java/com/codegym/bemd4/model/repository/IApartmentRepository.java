@@ -12,6 +12,7 @@ import java.util.List;
 
 @Repository
 public interface IApartmentRepository extends JpaRepository<Apartment, Long> {
+    List<Apartment> findAllByNameContainsIgnoreCase(String name);
     @Query( "SELECT a FROM Apartment a " +
             "JOIN a.building b " +
             "JOIN b.address ad " +
@@ -24,10 +25,6 @@ public interface IApartmentRepository extends JpaRepository<Apartment, Long> {
             "WHERE ad.city LIKE :city" +
             " AND ad.district LIKE :district")
     List<Apartment> findAllByCityAndDistrict(String district,String city);
-
-
-
-
 
 
 }

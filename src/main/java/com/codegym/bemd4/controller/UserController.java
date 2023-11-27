@@ -15,6 +15,7 @@ import java.util.Optional;
 @CrossOrigin("*")
 @RequestMapping("/api/user")
 public class UserController {
+
     @Autowired
     UserService userService;
 
@@ -27,7 +28,7 @@ public class UserController {
         return new ResponseEntity<>(UserDTOs, HttpStatus.OK);
     }
 
-    @PostMapping("/register")
+    @PutMapping("/register")
     public ResponseEntity<UserDTO> registerUser(@RequestBody UserDTO userDTO) {
 
         if (userDTO==null){
@@ -35,8 +36,17 @@ public class UserController {
         }
         return new ResponseEntity<>(userService.registerUser(userDTO), HttpStatus.OK);
     }
+    @PutMapping("/update")
+    public ResponseEntity<UserDTO> updateUser(@RequestBody UserDTO userDTO) {
 
-    @PutMapping("/{id}")
+        if (userDTO==null){
+            return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(userService.registerUser(userDTO), HttpStatus.OK);
+    }
+
+
+    @DeleteMapping("/{id}")
     public ResponseEntity<UserDTO> deleteUser(@PathVariable Long id) {
         UserDTO user = userService.getUserById(id);
 
@@ -46,13 +56,11 @@ public class UserController {
         userService.remove(id);
         return new ResponseEntity<>(user, HttpStatus.NO_CONTENT);
     }
-
     @GetMapping("/search")
     public ResponseEntity<List<UserDTO>> searchUsersByName(
             @RequestParam String name
     ) {
-        List<UserDTO> users = userService.searchUsersByNameContains(name);
-        return ResponseEntity.ok(users);
+        return ResponseEntity.ok(userService.searchUsersByNameContains(name));
     }
 
 }

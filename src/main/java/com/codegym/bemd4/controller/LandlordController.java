@@ -6,6 +6,7 @@ import com.codegym.bemd4.model.dto.entity.LandlordDTO;
 import com.codegym.bemd4.model.dto.entity.UserDTO;
 import com.codegym.bemd4.model.entity.building.Apartment;
 import com.codegym.bemd4.model.entity.building.Building;
+import com.codegym.bemd4.model.entity.person.Landlord;
 import com.codegym.bemd4.model.entity.person.User;
 import com.codegym.bemd4.model.service.LandlordService;
 import com.codegym.bemd4.model.service.UserService;
@@ -19,11 +20,10 @@ import java.util.Optional;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/api/landlord")
+@RequestMapping("/api/landlords")
 public class LandlordController {
     @Autowired
     LandlordService landlordService;
-
     @GetMapping
     public ResponseEntity<List<LandlordDTO>> getUsers() {
         List<LandlordDTO> LandlordDTOs = landlordService.getLandlord();
@@ -40,6 +40,17 @@ public class LandlordController {
             return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(landlordService.registerLandlord(landlordDTO), HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Landlord> updateLandLord(@RequestBody LandlordDTO landlordDTO,@PathVariable Long id) {
+        LandlordDTO landlord = landlordService.getLandlordById(id);
+        if (landlordDTO == null) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+        landlordDTO.setId(landlord.getId());
+        return new ResponseEntity<>(landlordService.update(landlordDTO), HttpStatus.OK);
+
     }
 
     @DeleteMapping("/{id}")

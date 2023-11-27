@@ -1,10 +1,10 @@
 package com.codegym.bemd4.controller;
 
 
-import com.codegym.bemd4.model.dto.entity.AddressDTO;
 import com.codegym.bemd4.model.dto.entity.ApartmentDTO;
-import com.codegym.bemd4.model.dto.entity.UserDTO;
+import com.codegym.bemd4.model.dto.request.ApartmentRequestDTO;
 import com.codegym.bemd4.model.dto.response.ApartmentResponse;
+import com.codegym.bemd4.model.dto.response.ApartmentResponseDTO;
 import com.codegym.bemd4.model.entity.building.Apartment;
 import com.codegym.bemd4.model.service.ApartmentService;
 import lombok.RequiredArgsConstructor;
@@ -36,26 +36,30 @@ public class ApartmentController {
 
     @GetMapping
     public ResponseEntity<ApartmentResponse> getApartments(
-            @RequestParam(value = "pageNo",defaultValue = "0", required = false) int pageNo,
-            @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize
+            @RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
+            @RequestParam(value = "pageSize", defaultValue = "50", required = false) int pageSize
     ) {
         ApartmentResponse apartments = apartmentService.getApartments(pageNo, pageSize);
         return new ResponseEntity<>(apartments, HttpStatus.OK);
     }
 
-    @PostMapping
-    public ResponseEntity<Apartment> createApartment(@RequestBody Apartment apartment) {
-        return new ResponseEntity<>(apartmentService.save(apartment), HttpStatus.OK);
+    @PostMapping("/add")
+    public ResponseEntity<Apartment> createApartment(@RequestBody ApartmentRequestDTO apartmentRequestDTO) {
+        if (apartmentRequestDTO == null) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+        Apartment newApartment = apartmentService.create(apartmentRequestDTO);
+        return new ResponseEntity<>(newApartment, HttpStatus.CREATED);
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<Apartment> updateApartment(@PathVariable Long id, @RequestBody Apartment apartment) {
-        Optional<ApartmentDTO> apartmentOptional = Optional.ofNullable(apartmentService.getApartmentById(id));
-        if (!apartmentOptional.isPresent()) {
+    public ResponseEntity<Apartment> updateApartment(@PathVariable Long id, @RequestBody ApartmentRequestDTO apartmentDTO) {
+        ApartmentRequestDTO apartment = apartmentService.getApartmentRequestDTOById(id);
+        if (apartmentDTO == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        apartment.setId(apartmentOptional.get().getId());
-        return new ResponseEntity<>(apartmentService.save(apartment), HttpStatus.OK);
+        apartmentDTO.setId(apartment.getId());
+        return new ResponseEntity<>(apartmentService.update(apartmentDTO), HttpStatus.OK);
     }
 
     @DeleteMapping("{id}")
@@ -71,7 +75,7 @@ public class ApartmentController {
     @GetMapping("/search")
     public ResponseEntity<List<Apartment>> searchApartmentsByCityAndDistrict(
             @RequestParam("city") String city,
-            @RequestParam(value = "district", defaultValue = "") String district){
+            @RequestParam(value = "district", defaultValue = "") String district) {
 
         List<Apartment> apartments = apartmentService.searchApartmentsByCityAndDistrict(city, district);
         return ResponseEntity.ok(apartments);

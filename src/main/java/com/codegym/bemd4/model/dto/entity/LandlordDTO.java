@@ -12,7 +12,7 @@ public class LandlordDTO {
     private String username;
     private String password;
     private String email;
-    private Address address;
+    private String address;
     private String phoneNumber;
     private String avatar;
     private List<ApartmentDTO> apartments;

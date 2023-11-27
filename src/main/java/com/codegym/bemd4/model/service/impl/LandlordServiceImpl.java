@@ -68,6 +68,12 @@ public class LandlordServiceImpl implements LandlordService {
     }
 
     @Override
+    public Landlord update(LandlordDTO landlordDTO) {
+        Landlord landlord = modelMapper.map(landlordDTO,Landlord.class);
+        return landlordRepository.save(landlord);
+    }
+
+    @Override
     public LandlordDTO findLandlordByUsername(String username) {
         Landlord landlord = landlordRepository.findLandlordByUsername(username);
         return modelMapper.map(landlord, LandlordDTO.class);

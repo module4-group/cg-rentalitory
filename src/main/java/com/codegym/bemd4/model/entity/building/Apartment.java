@@ -19,7 +19,7 @@ public class Apartment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "", length = 56, nullable = false)
+    @Column(name = "apartment_name", length = 56, nullable = false)
     private String name;
     @Column(name = "room_number", length = 10, nullable = false)
     private Long roomNumber;
@@ -35,6 +35,7 @@ public class Apartment {
     private Integer maxTenants;
     @Column(name = "activated", nullable = false, columnDefinition = "BIT default true")
     private boolean activated;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "building_id")
     private Building building;

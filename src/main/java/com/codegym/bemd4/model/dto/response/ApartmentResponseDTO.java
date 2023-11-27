@@ -1,10 +1,10 @@
-package com.codegym.bemd4.model.dto.entity;
+package com.codegym.bemd4.model.dto.response;
 
 import com.codegym.bemd4.model.entity.building.Building;
 import lombok.Data;
 
 @Data
-public class ApartmentDTO {
+public class ApartmentResponseDTO {
     private Long id;
     private String name;
     private Long roomNumber;
@@ -13,6 +13,5 @@ public class ApartmentDTO {
     private Long numberOfRoom;
     private Long monthlyRent;
     private Integer maxTenants;
-    private Boolean activated;
     private Building building;
 }

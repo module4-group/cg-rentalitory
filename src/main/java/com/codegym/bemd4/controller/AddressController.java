@@ -1,7 +1,7 @@
 package com.codegym.bemd4.controller;
 
 import com.codegym.bemd4.model.dto.entity.AddressDTO;
-import com.codegym.bemd4.model.dto.entity.BuildingDTO;
+import com.codegym.bemd4.model.entity.building.Address;
 import com.codegym.bemd4.model.service.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,7 +15,8 @@ import java.util.List;
 @RequestMapping("/api/address")
 public class AddressController {
     @Autowired
-    AddressService addressService;
+    private AddressService addressService;
+
 
     @GetMapping
     public ResponseEntity<List<AddressDTO>> getAddress() {
@@ -29,7 +30,7 @@ public class AddressController {
     @PostMapping("/create")
     public ResponseEntity<AddressDTO> createAddress(@RequestBody AddressDTO addressDTO) {
         if (addressDTO == null) {
-             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(addressService.createAddress(addressDTO), HttpStatus.OK);
     }
@@ -45,4 +46,13 @@ public class AddressController {
         return new ResponseEntity<>(address, HttpStatus.NO_CONTENT);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Address> updateAddress(@PathVariable Long id, @RequestBody AddressDTO addressDTO) {
+        AddressDTO address = addressService.getAddressById(id);
+        if (address == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        addressDTO.setId(address.getId());
+        return new ResponseEntity<>(addressService.update(addressDTO),HttpStatus.OK);
+    }
 }

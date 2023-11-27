@@ -1,10 +1,12 @@
 package com.codegym.bemd4.model.service.impl;
 
 import com.codegym.bemd4.model.dto.entity.BuildingDTO;
-import com.codegym.bemd4.model.dto.entity.UserDTO;
+import com.codegym.bemd4.model.entity.building.Address;
 import com.codegym.bemd4.model.entity.building.Building;
-import com.codegym.bemd4.model.entity.person.User;
+import com.codegym.bemd4.model.entity.person.Landlord;
+import com.codegym.bemd4.model.repository.IAddressRepository;
 import com.codegym.bemd4.model.repository.IBuildingRepository;
+import com.codegym.bemd4.model.repository.ILandlordRepository;
 import com.codegym.bemd4.model.service.BuildingService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -23,9 +25,14 @@ public class BuildingServiceImpl implements BuildingService {
 
     @Autowired
     private final IBuildingRepository buildingRepository;
+    @Autowired
+    private final IAddressRepository addressRepository;
+    @Autowired
+    private final ILandlordRepository landlordRepository;
 
     @Autowired
     private final ModelMapper modelMapper;
+
     @Override
     public List<BuildingDTO> getBuilding() {
         Iterable<Building> buildingsEntities = buildingRepository.findAll();
@@ -41,13 +48,20 @@ public class BuildingServiceImpl implements BuildingService {
     }
 
     @Override
-    public BuildingDTO createBuilding(BuildingDTO buildingDTO) {
+    public Building createBuilding(BuildingDTO buildingDTO) {
         Building building = modelMapper.map(buildingDTO, Building.class);
         building.setActivated(true);
-        building = buildingRepository.save(building);
-        BuildingDTO savedDTO = modelMapper.map(building, BuildingDTO.class);
-        return savedDTO;
+
+        Address address = addressRepository.findAddressById(buildingDTO.getAddressId());
+        Landlord landlord = landlordRepository.findLandlordById(buildingDTO.getLandlordId());
+
+        building.setAddress(address);
+        building.setLandlord(landlord);
+
+        buildingRepository.save(building);
+        return building;
     }
+
 
     @Override
     public BuildingDTO remove(Long id) {
@@ -59,6 +73,12 @@ public class BuildingServiceImpl implements BuildingService {
         building = buildingRepository.save(building);
         BuildingDTO removedDTO = modelMapper.map(building, BuildingDTO.class);
         return removedDTO;
+    }
+
+    @Override
+    public Building update(BuildingDTO buildingDTO) {
+        Building building = modelMapper.map(buildingDTO, Building.class);
+        return buildingRepository.save(building);
     }
 
 //    @Override
