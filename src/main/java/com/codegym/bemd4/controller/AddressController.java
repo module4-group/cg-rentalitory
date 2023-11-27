@@ -1,9 +1,12 @@
 package com.codegym.bemd4.controller;
 
 import com.codegym.bemd4.model.dto.entity.AddressDTO;
+import com.codegym.bemd4.model.dto.entity.ApartmentDTO;
 import com.codegym.bemd4.model.dto.entity.BuildingDTO;
 import com.codegym.bemd4.model.dto.entity.UserDTO;
+import com.codegym.bemd4.model.entity.building.Address;
 import com.codegym.bemd4.model.service.AddressService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +19,10 @@ import java.util.List;
 @RequestMapping("/api/address")
 public class AddressController {
     @Autowired
-    AddressService addressService;
+    private AddressService addressService;
+
+    @Autowired
+    private ModelMapper modelMapper;
 
     @GetMapping
     public ResponseEntity<List<AddressDTO>> getAddress() {
@@ -26,6 +32,7 @@ public class AddressController {
         }
         return new ResponseEntity<>(addressDTOs, HttpStatus.OK);
     }
+
     @PostMapping("/create")
     public ResponseEntity<AddressDTO> createAddress(@RequestBody AddressDTO addressDTO) {
         if (addressDTO == null) {
@@ -33,6 +40,7 @@ public class AddressController {
         }
         return new ResponseEntity<>(addressService.createAddress(addressDTO), HttpStatus.OK);
     }
+
     @DeleteMapping("delete/{id}")
     public ResponseEntity<AddressDTO> deleteAddress(@PathVariable Long id) {
         AddressDTO address = addressService.getAddressById(id);
@@ -43,12 +51,14 @@ public class AddressController {
         addressService.remove(id);
         return new ResponseEntity<>(address, HttpStatus.NO_CONTENT);
     }
-    @PutMapping("/update/{id}")
-    public ResponseEntity<AddressDTO> updateUAddress(@RequestBody AddressDTO addressDTO) {
 
-        if (addressDTO==null){
-            return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
+    @PutMapping("/{id}")
+    public ResponseEntity<Address> updateAddress(@PathVariable Long id, @RequestBody AddressDTO addressDTO) {
+        AddressDTO address = addressService.getAddressById(id);
+        if (address == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(addressService.createAddress(addressDTO), HttpStatus.OK);
+        addressDTO.setId(address.getId());
+        return new ResponseEntity<>(addressService.update(addressDTO),HttpStatus.OK);
     }
 }
