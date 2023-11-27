@@ -10,5 +10,5 @@ import java.util.List;
 public interface IBuildingRepository extends JpaRepository<Building, Long> {
     Building findBuildingById(Long buildingId);
 
-//    List<Building> findByNameContainsIgnoreCase(String name);
+    List<Building> findByBuildingNameContainsIgnoreCase(String buildingName);
 }

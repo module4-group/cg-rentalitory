@@ -67,21 +67,21 @@ public class LandlordServiceImpl implements LandlordService {
         return removedDTO;
     }
 
-    @Override
-    public LandlordDTO findLandlordByUsername(String username) {
-        Landlord landlord = landlordRepository.findLandlordByUsername(username);
-        return modelMapper.map(landlord, LandlordDTO.class);
-    }
+//    @Override
+//    public LandlordDTO findLandlordByUsername(String username) {
+//        Landlord landlord = landlordRepository.findLandlordByUsername(username);
+//        return modelMapper.map(landlord, LandlordDTO.class);
+//    }
+//
+//    @Override
+//    public LandlordDTO findLandlordByEmail(String email) {
+//        Landlord landlord = landlordRepository.findLandlordByEmail(email);
+//        return modelMapper.map(landlord,LandlordDTO.class);
+//    }
 
     @Override
-    public LandlordDTO findLandlordByEmail(String email) {
-        Landlord landlord = landlordRepository.findLandlordByEmail(email);
-        return modelMapper.map(landlord,LandlordDTO.class);
-    }
-
-    @Override
-    public List<LandlordDTO> searchLandlordsByNameContains(String name) {
-        List<Landlord> landlordEntities= landlordRepository.findByUsernameContainsIgnoreCase(name);
+    public List<LandlordDTO> searchLandlordsByFullNameContains(String fullName) {
+        List<Landlord> landlordEntities= landlordRepository.findByFullNameContainsIgnoreCase(fullName);
         return StreamSupport.stream(landlordEntities.spliterator(), true)
                 .map(entity -> modelMapper.map(entity, LandlordDTO.class))
                 .collect(Collectors.toList());

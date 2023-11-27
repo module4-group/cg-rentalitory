@@ -10,9 +10,9 @@ import java.util.List;
 public interface ILandlordRepository extends JpaRepository<Landlord,Long> {
     Landlord findLandlordById(Long id);
 
-    Landlord findLandlordByUsername(String username);
+//    Landlord findLandlordByUsername(String username);
+//
+//    Landlord findLandlordByEmail(String email);
 
-    Landlord findLandlordByEmail(String email);
-
-    List<Landlord> findByUsernameContainsIgnoreCase(String name);
+    List<Landlord> findByFullNameContainsIgnoreCase(String fullName);
 }
