@@ -2,6 +2,7 @@ package com.codegym.bemd4.controller;
 
 import com.codegym.bemd4.model.dto.entity.AddressDTO;
 import com.codegym.bemd4.model.dto.entity.BuildingDTO;
+import com.codegym.bemd4.model.dto.entity.UserDTO;
 import com.codegym.bemd4.model.service.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -42,14 +43,12 @@ public class AddressController {
         addressService.remove(id);
         return new ResponseEntity<>(address, HttpStatus.NO_CONTENT);
     }
-    @PutMapping
-    public ResponseEntity<AddressDTO> updateAddress(@PathVariable Long id) {
-        AddressDTO address = addressService.getAddressById(id);
+    @PutMapping("/update/{id}")
+    public ResponseEntity<AddressDTO> updateUAddress(@RequestBody AddressDTO addressDTO) {
 
-        if (address == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        if (addressDTO==null){
+            return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
         }
-        addressService.update(id);
-        return new ResponseEntity<>(address, HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(addressService.createAddress(addressDTO), HttpStatus.OK);
     }
 }
