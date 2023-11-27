@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Table(name= "buildings")
 @NoArgsConstructor
@@ -27,6 +29,7 @@ public class Building {
     private Landlord landlord;
     @Column(name = "activated", nullable = false,columnDefinition = "BIT default true")
     private Boolean activated;
-
+    @OneToMany(fetch= FetchType.EAGER)
+    List<Apartment> apartments;
 
 }
