@@ -5,6 +5,7 @@ import lombok.Data;
 
 @Data
 public class ApartmentRequestDTO {
+    private Long id;
     private String name;
     private Long roomNumber;
     private Long area;
@@ -12,6 +13,5 @@ public class ApartmentRequestDTO {
     private Long numberOfRoom;
     private Long monthlyRent;
     private Integer maxTenants;
-    private String buildingId;
-
+    private Long buildingId;
 }

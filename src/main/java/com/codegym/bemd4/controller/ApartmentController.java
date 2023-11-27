@@ -37,7 +37,7 @@ public class ApartmentController {
     @GetMapping
     public ResponseEntity<ApartmentResponse> getApartments(
             @RequestParam(value = "pageNo",defaultValue = "0", required = false) int pageNo,
-            @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize
+            @RequestParam(value = "pageSize", defaultValue = "50", required = false) int pageSize
     ) {
         ApartmentResponse apartments = apartmentService.getApartments(pageNo, pageSize);
         return new ResponseEntity<>(apartments, HttpStatus.OK);
@@ -45,18 +45,20 @@ public class ApartmentController {
 
     @PostMapping("/add")
     public ResponseEntity<Apartment> createApartment(@RequestBody ApartmentRequestDTO apartmentDTO) {
-
+        if (apartmentDTO == null){
+            return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
+        }
         Apartment newApartment = apartmentService.create(apartmentDTO);
         return new ResponseEntity<>(newApartment,HttpStatus.CREATED);
     }
 //    @PutMapping("{id}")
-//    public ResponseEntity<Apartment> updateApartment(@PathVariable Long id, @RequestBody Apartment apartment) {
+//    public ResponseEntity<Apartment> updateApartment(@PathVariable Long id, @RequestBody ApartmentRequestDTO apartmentRequestDTO) {
 //        Optional<ApartmentDTO> apartmentOptional = Optional.ofNullable(apartmentService.getApartmentById(id));
 //        if (!apartmentOptional.isPresent()) {
 //            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 //        }
 //        apartment.setId(apartmentOptional.get().getId());
-//        return new ResponseEntity<>(apartmentService.save(apartment), HttpStatus.OK);
+//        return new ResponseEntity<>(apartmentService.create(apartmentRequestDTO), HttpStatus.OK);
 //    }
     @DeleteMapping("{id}")
     public ResponseEntity<Apartment> deleteApartment(@PathVariable Long id) {

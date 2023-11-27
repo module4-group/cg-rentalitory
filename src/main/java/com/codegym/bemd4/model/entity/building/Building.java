@@ -10,7 +10,7 @@ import lombok.Setter;
 import java.util.List;
 
 @Entity
-@Table(name= "buildings")
+@Table(name = "buildings")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -19,15 +19,15 @@ public class Building {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "building_name", length = 200, nullable = false)
+    @Column(name = "building_name", length = 200, nullable = false, unique = true)
     private String buildingName;
     @OneToOne
-    @JoinColumn(name= "address_id")
+    @JoinColumn(name = "address_id")
     private Address address;
     @OneToOne
-    @JoinColumn(name= "landlord_id")
+    @JoinColumn(name = "landlord_id")
     private Landlord landlord;
-    @Column(name = "activated", nullable = false,columnDefinition = "BIT default true")
+    @Column(name = "activated", nullable = false, columnDefinition = "BIT default true")
     private Boolean activated;
     @OneToMany(fetch= FetchType.EAGER)
     List<Apartment> apartments;

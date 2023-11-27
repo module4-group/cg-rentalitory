@@ -1,11 +1,11 @@
 use test_data_case;
 
-insert into address(city,district,house_number) values("hcm","quan pn","21k");
-insert into address(city,district,house_number) values("hcm","quan 8","25");
-insert into address(city,district,house_number) values("hcm","quan 9","120");
-insert into address(city,district,house_number) values("hcm","quan 1","90");
-insert into address(city,district,house_number) values("hcm","quan 10","72a");
-insert into address(city,district,house_number) values("hcm","quan 111","5a");
+insert into address(city,district,ward,house_number) values("hcm","quan pn","1","21k");
+insert into address(city,district,ward,house_number) values("hcm","quan 8","3","25");
+insert into address(city,district,ward,house_number) values("hcm","quan 9","6","120");
+insert into address(city,district,ward,house_number) values("hcm","quan 1","10","90");
+insert into address(city,district,ward,house_number) values("hcm","quan 10","4","72a");
+insert into address(city,district,ward,house_number) values("hcm","quan 11","2","5a");
 
 insert into landlord(activated,address,avatar,email,fullname,`password`,phone_number,username) values(true,"21k","abc1","abc1@gmail.com","kiet bui","123","09128326754","kiet");
 insert into landlord(activated,address,avatar,email,fullname,`password`,phone_number,username) values(true,"22k","abc2","abc2@gmail.com","dat bui","123","09128326222","dat");

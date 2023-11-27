@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -63,14 +64,10 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public AddressDTO update(Long id) {
-        Address address = addressRepository.findAddressById(id);
-        if (address == null) {
-            return null;
-        }
-        address = addressRepository.save(address);
-        AddressDTO updatedDTO = modelMapper.map(address, AddressDTO.class);
-        return updatedDTO;
-
+    public Address update(AddressDTO addressDTO) {
+        Address savedAddress = modelMapper.map(addressDTO,Address.class);
+        return addressRepository.save(savedAddress);
     }
+
+
 }

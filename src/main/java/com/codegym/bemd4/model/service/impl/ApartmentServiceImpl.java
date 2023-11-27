@@ -39,8 +39,7 @@ public class ApartmentServiceImpl implements ApartmentService {
     private final IAddressRepository addressRepository;
     @Autowired
     private final ILandlordRepository landlordRepository;
-    @Autowired
-    private ApartmentConverter apartmentConverter;
+
 
     private final ModelMapper modelMapper;
 
@@ -92,52 +91,30 @@ public class ApartmentServiceImpl implements ApartmentService {
     }
     @Override
     public Apartment create(ApartmentRequestDTO apartmentRequestDTO) {
-//        Apartment apartment = apartmentConverter.fromApartmentDTOtoApartment(apartmentRequestDTO);
-        Address address = new Address();
-        address.setCity(apartmentRequestDTO.getCity());
-        address.setWard(apartmentRequestDTO.getWard());
-        address.setDistrict(apartmentRequestDTO.getDistrict());
-        address.setHouseNumber(apartmentRequestDTO.getHouseNumber());
-        address.setActivated(true);
-
-        Landlord landlord = getLandlord(apartmentRequestDTO);
-
         Apartment apartment = modelMapper.map(apartmentRequestDTO,Apartment.class);
         apartment.setActivated(true);
 
-        Building building = modelMapper.map(apartment.getBuilding(),Building.class);
-        building.setActivated(true);
-        building.setAddress(address);
-        building.setLandlord(landlord);
+        Building building = buildingRepository.findBuildingById(apartmentRequestDTO.getBuildingId());
 
         apartment.setBuilding(building);
 
-
-
-
-//        Address address = modelMapper.map(apartment.getBuilding().getAddress(),Address.class);
-//        Landlord landlord = modelMapper.map(apartment.getBuilding().getLandlord(),Landlord.class);
-        
-        buildingRepository.save(building);
-        addressRepository.save(address);
-        landlordRepository.save(landlord);
         apartmentRepository.save(apartment);
         return apartment;
     }
 
-    private static Landlord getLandlord(ApartmentRequestDTO apartmentRequestDTO) {
-        Landlord landlord = new Landlord();
-        landlord.setFullName(apartmentRequestDTO.getName());
-        landlord.setUsername(apartmentRequestDTO.getUsername());
-        landlord.setPassword(apartmentRequestDTO.getPassword());
-        landlord.setAddress(apartmentRequestDTO.getAddress());
-        landlord.setAvatar(apartmentRequestDTO.getAvatar());
-        landlord.setEmail(apartmentRequestDTO.getEmail());
-        landlord.setPhoneNumber(apartmentRequestDTO.getPhoneNumber());
-
-        landlord.setActivated(true);
-        return landlord;
-    }
+//    private static Landlord getLandlord(ApartmentRequestDTO apartmentRequestDTO) {
+//        Landlord landlord = new Landlord();
+//        landlord.setFullName(apartmentRequestDTO.getName());
+//        landlord.setUsername(apartmentRequestDTO.getUsername());
+//        landlord.setPassword(apartmentRequestDTO.getPassword());
+//        landlord.setAddress(apartmentRequestDTO.getAddress());
+//        landlord.setAvatar(apartmentRequestDTO.getAvatar());
+//        landlord.setEmail(apartmentRequestDTO.getEmail());
+//        landlord.setPhoneNumber(apartmentRequestDTO.getPhoneNumber());
+//
+//        landlord.setActivated(true);
+//        return landlord;
+//    }
 
     @Override
     public List<Apartment> searchApartmentsByCity(String city) {
