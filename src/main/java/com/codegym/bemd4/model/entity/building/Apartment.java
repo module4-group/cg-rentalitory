@@ -35,6 +35,7 @@ public class Apartment {
     private Integer maxTenants;
     @Column(name = "activated", nullable = false, columnDefinition = "BIT default true")
     private boolean activated;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "building_id")
     private Building building;

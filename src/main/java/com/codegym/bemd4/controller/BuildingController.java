@@ -4,6 +4,7 @@ import com.codegym.bemd4.model.dto.entity.ApartmentDTO;
 import com.codegym.bemd4.model.dto.entity.BuildingDTO;
 import com.codegym.bemd4.model.dto.entity.UserDTO;
 import com.codegym.bemd4.model.entity.building.Apartment;
+import com.codegym.bemd4.model.entity.building.Building;
 import com.codegym.bemd4.model.service.BuildingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,21 +22,24 @@ public class BuildingController {
     BuildingService buildingService;
 
     @GetMapping
-    public ResponseEntity<List<BuildingDTO>> getBuilding(){
+    public ResponseEntity<List<BuildingDTO>> getBuilding() {
         List<BuildingDTO> BuildingDTOs = buildingService.getBuilding();
-        if (BuildingDTOs.isEmpty()){
+        if (BuildingDTOs.isEmpty()) {
             return new ResponseEntity<List<BuildingDTO>>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(BuildingDTOs, HttpStatus.OK);
     }
 
     @PostMapping("/create")
-    public ResponseEntity<BuildingDTO> createBuilding(@RequestBody BuildingDTO buildingDTO ){
-        if (buildingDTO==null){
-            return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
+    public ResponseEntity<Building> createBuilding(@RequestBody BuildingDTO buildingDTO) {
+        if (buildingDTO == null) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(buildingService.createBuilding(buildingDTO), HttpStatus.OK);
+        Building building = buildingService.createBuilding(buildingDTO);
+        return new ResponseEntity<>(building, HttpStatus.CREATED);
+        // 1 building chỉ có 1 address và 1 landlord
     }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<BuildingDTO> deleteBuilding(@PathVariable Long id) {
         BuildingDTO building = buildingService.getBuildingById(id);
