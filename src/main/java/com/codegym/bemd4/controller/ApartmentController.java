@@ -21,7 +21,6 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/apartments")
-@RequiredArgsConstructor
 @CrossOrigin("*")
 public class ApartmentController {
 
@@ -81,13 +80,13 @@ public class ApartmentController {
 
     @GetMapping("/sort")
     public ResponseEntity<List<ApartmentDTO>> filterBuildingByPrice(
-            @RequestParam(name = "minMonthlyRent", required = false) Long maxMonthlyRent,
-            @RequestParam(name = "maxMonthlyRent", required = false) Long minMonthlyRent,
-            @RequestParam(defaultValue = "5") int size,
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "price") String sortBy) {
+            @RequestParam(name = "maxMonthlyRent", required = false) Long maxMonthlyRent,
+            @RequestParam(name = "minMonthlyRent", required = false) Long minMonthlyRent,
+            @RequestParam(defaultValue = "5") int pageSize,
+            @RequestParam(defaultValue = "0") int pageNo,
+            @RequestParam(defaultValue = "monthlyRent") String sortBy) {
 
-        Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy).ascending());
+        Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.by(sortBy).ascending());
         List<ApartmentDTO> filterResults = apartmentService.filterApartmentByMonthlyRent(minMonthlyRent, maxMonthlyRent, pageable);
 
         return new ResponseEntity<>(filterResults, HttpStatus.OK);

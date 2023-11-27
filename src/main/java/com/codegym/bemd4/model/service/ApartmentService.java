@@ -20,5 +20,4 @@ public interface ApartmentService {
     List<Apartment> searchApartmentsByCityAndDistrict(String city, String district);
     List<ApartmentDTO> filterApartmentByMonthlyRent(Long minMonthlyRent, Long maxMonthlyRent, Pageable pageable);
 
-    Object convertToDTO(Apartment apartment);
 }

@@ -18,7 +18,8 @@ public interface IApartmentRepository extends JpaRepository<Apartment, Long> {
     @Query( "SELECT a FROM Apartment a " +
             "JOIN a.building b " +
             "JOIN b.address ad " +
-            "WHERE ad.city LIKE :city")
+            "WHERE ad.city LIKE :city" +
+            " AND ad.district LIKE :district")
     List<Apartment> findAllByCity(String city);
 
     @Query( "SELECT a FROM Apartment a " +
@@ -26,10 +27,11 @@ public interface IApartmentRepository extends JpaRepository<Apartment, Long> {
             "JOIN b.address ad " +
             "WHERE ad.city LIKE :city" +
             " AND ad.district LIKE :district")
-    List<Apartment> findAllByCityAndDistrict(String district,String city);
+    List<Apartment> findAllByCityAndDistrict(String city,String district);
 
-    Page<Apartment> findByPriceBetween(Long minMonthlyRent, Long maxMonthlyRent,Pageable pageable);
-    Page<Apartment> findByPriceGreaterThanEqual(Long minMonthlyRent, Pageable pageable);
-    Page<Apartment> findByPriceLessThanEqual(Long maxMonthlyRent,Pageable pageable);
+    Page<Apartment> findByMonthlyRentBetween(Long minMonthlyRent, Long maxMonthlyRent,Pageable pageable);
+    Page<Apartment> findByMonthlyRentGreaterThanEqual(Long minMonthlyRent, Pageable pageable);
+    Page<Apartment> findByMonthlyRentLessThanEqual(Long maxMonthlyRent,Pageable pageable);
+
 
 }
