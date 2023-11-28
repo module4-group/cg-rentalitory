@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -71,14 +72,17 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO registerUser(UserDTO userDTO) {
         User user = modelMapper.map(userDTO, User.class);
-        user.setActivated(true);
-        Role roleUser = roleRepository.findRoleByName("ROLE_USER");
-        user.getRoles().add(roleUser);
-        user = userRepository.save(user);
+        if (!userDTO.getPassword().isEmpty()) {
+            String hashedPassword = BCrypt.hashpw(userDTO.getPassword(), BCrypt.gensalt(10));
+            user.setPassword(hashedPassword);
+        }
+        Role role = roleRepository.findRoleByName("ROLE_USER");
+        user.getRoles().add(role);
+        user.setActivated(user.getActivated());
+        userRepository.save(user);
         UserDTO savedDTO = modelMapper.map(user, UserDTO.class);
         return savedDTO;
     }
-
 
 
 }

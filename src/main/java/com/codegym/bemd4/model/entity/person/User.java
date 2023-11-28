@@ -1,5 +1,6 @@
 package com.codegym.bemd4.model.entity.person;
 
+import com.codegym.bemd4.security.UserLoginDetails;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -7,8 +8,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -18,25 +17,25 @@ import java.util.Set;
         uniqueConstraints = {@UniqueConstraint(name = "users_uk",
                 columnNames = {"email", "phone_number"})})
 @NoArgsConstructor @AllArgsConstructor @Getter @Setter
-public class User {
+public class User implements UserLoginDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "users_roles",
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private Set<Role> roles = new HashSet<Role>();
+    private Set<Role> roles = new HashSet<>();
     @NotBlank
     @Column(name = "fullname", length = 200, nullable = false)
     private String fullName;
 
     @NotBlank
-    @Column(name = "username", length = 200, nullable = false)
+    @Column(name = "username", length = 200, nullable = false, unique = true)
     private String username;
 
     @NotBlank

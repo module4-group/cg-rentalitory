@@ -2,6 +2,7 @@ package com.codegym.bemd4.model.service;
 
 import com.codegym.bemd4.model.dto.entity.LandlordDTO;
 import com.codegym.bemd4.model.dto.entity.UserDTO;
+import com.codegym.bemd4.model.entity.person.Landlord;
 
 import java.util.List;
 
@@ -12,6 +13,8 @@ public interface LandlordService {
     LandlordDTO remove(Long id);
     LandlordDTO findLandlordByUsername(String username);
     LandlordDTO findLandlordByEmail(String email);
+
+    Landlord getLandlordFromToken(String token);
 
     List<LandlordDTO> searchLandlordsByNameContains(String name);
 }

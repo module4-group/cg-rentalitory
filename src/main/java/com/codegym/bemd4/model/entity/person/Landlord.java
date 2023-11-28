@@ -1,7 +1,8 @@
 package com.codegym.bemd4.model.entity.person;
 
 
-import com.codegym.bemd4.model.entity.building.Apartment;
+import com.codegym.bemd4.model.entity.building.Building;
+import com.codegym.bemd4.security.UserLoginDetails;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -19,7 +20,7 @@ import java.util.Set;
 @Entity
 @Table
 @NoArgsConstructor @AllArgsConstructor @Getter @Setter
-public class Landlord {
+public class Landlord implements UserLoginDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -37,7 +38,7 @@ public class Landlord {
     private String fullName;
 
     @NotBlank
-    @Column(name = "username", length = 200, nullable = false)
+    @Column(name = "username", length = 200, nullable = false,unique = true)
     private String username;
 
     @NotBlank
@@ -65,4 +66,8 @@ public class Landlord {
 
     @Column(name = "activated", nullable = false, columnDefinition = "BIT default true")
     private Boolean activated;
+
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "building_id")
+    List<Building> buildings;
 }
