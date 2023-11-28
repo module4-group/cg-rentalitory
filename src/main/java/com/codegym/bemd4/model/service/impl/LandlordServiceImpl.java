@@ -11,6 +11,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -69,6 +70,14 @@ public class LandlordServiceImpl implements LandlordService {
     @Override
     public Landlord update(LandlordDTO landlordDTO) {
         Landlord landlord = modelMapper.map(landlordDTO,Landlord.class);
+        if (!landlordRepository.existsByUsername(landlord.getUsername())) {
+            throw new IllegalArgumentException("Username doesn't exists");
+        }
+        if (!landlordDTO.getPassword().isEmpty()) {
+            String hashedPassword = BCrypt.hashpw(landlordDTO.getPassword(), BCrypt.gensalt(10));
+            landlord.setPassword(hashedPassword);
+        }
+        landlord.setActivated(true);
         return landlordRepository.save(landlord);
     }
 
@@ -76,15 +85,10 @@ public class LandlordServiceImpl implements LandlordService {
     @Override
     public Landlord getLandlordFromToken(String token) {
         String username = jwtTokenProvider.getUsernameFromJWT(token);
-        Landlord landlord = findLandlordByUsername(username);
+        Landlord landlord = landlordRepository.findLandlordByUsername(username);
         return landlord;
     }
 
-    @Override
-    public Landlord findLandlordByUsername(String username) {
-        return landlordRepository.findLandlordNamesByUsername(username);
-
-    }
 
     @Override
     public List<LandlordDTO> searchLandlordsByFullNameContains(String fullName) {

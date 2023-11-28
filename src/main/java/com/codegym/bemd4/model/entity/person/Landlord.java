@@ -20,7 +20,7 @@ import java.util.Set;
 @Entity
 @Table
 @NoArgsConstructor @AllArgsConstructor @Getter @Setter
-public class Landlord implements UserLoginDetails {
+public class                Landlord implements UserLoginDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
