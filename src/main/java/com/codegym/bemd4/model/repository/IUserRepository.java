@@ -13,10 +13,8 @@ public interface IUserRepository extends JpaRepository<User, Long> {
     User findUserById(Long userId);
     User findUserByUsername(String username);
     User findUserByEmail(String email);
-    @Query("SELECT r.name FROM Role r " +
-            "JOIN User u " +
-            "WHERE u.username = :username")
-    List<String> findRolesByUsername(@Param("username") String username);
+    @Query("SELECT r.name FROM Role r JOIN r.users u WHERE u.username = :username")
+    List<String> findRolesNamesByUsername(@Param("username") String username);
 
     List<User> findByUsernameContainsIgnoreCase(String username);
 }

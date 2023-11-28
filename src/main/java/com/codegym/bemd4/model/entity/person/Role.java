@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Set;
+
 @Entity
 @Table(name = "roles")
 @NoArgsConstructor @AllArgsConstructor @Getter @Setter
@@ -24,4 +26,10 @@ public class Role {
     @NotBlank
     @Column(name = "description", length = 100, nullable = false)
     private String desc;
+    @ManyToMany(mappedBy = "roles")
+    private Set<User> users;
+
+    @ManyToMany(mappedBy = "roles")
+    private Set<Landlord> landlords;
+
 }
