@@ -1,12 +1,20 @@
 package com.codegym.bemd4.model.service.impl;
 
+
 import com.codegym.bemd4.model.dto.entity.ApartmentDTO;
 import com.codegym.bemd4.model.dto.request.ApartmentRequestDTO;
 import com.codegym.bemd4.model.dto.response.ApartmentResponse;
 import com.codegym.bemd4.model.entity.building.Apartment;
 import com.codegym.bemd4.model.entity.building.Building;
+
 import com.codegym.bemd4.model.repository.IApartmentRepository;
 import com.codegym.bemd4.model.repository.IBuildingRepository;
+
+import com.codegym.bemd4.model.entity.person.Landlord;
+import com.codegym.bemd4.model.repository.IAddressRepository;
+import com.codegym.bemd4.model.repository.IApartmentRepository;
+import com.codegym.bemd4.model.repository.IBuildingRepository;
+import com.codegym.bemd4.model.repository.ILandlordRepository;
 import com.codegym.bemd4.model.service.ApartmentService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +38,10 @@ public class ApartmentServiceImpl implements ApartmentService {
     private final IApartmentRepository apartmentRepository;
     @Autowired
     private final IBuildingRepository buildingRepository;
+    @Autowired
+    private final IAddressRepository addressRepository;
+    @Autowired
+    private final ILandlordRepository landlordRepository;
 
 
     private final ModelMapper modelMapper;
@@ -97,6 +109,7 @@ public class ApartmentServiceImpl implements ApartmentService {
 
         apartmentRepository.save(apartment);
         return apartment;
+
     }
 
     @Override
@@ -108,6 +121,21 @@ public class ApartmentServiceImpl implements ApartmentService {
         return apartmentRepository.save(apartment);
     }
 
+
+//    private static Landlord getLandlord(ApartmentRequestDTO apartmentRequestDTO) {
+//        Landlord landlord = new Landlord();
+//        landlord.setFullName(apartmentRequestDTO.getName());
+//        landlord.setUsername(apartmentRequestDTO.getUsername());
+//        landlord.setPassword(apartmentRequestDTO.getPassword());
+//        landlord.setAddress(apartmentRequestDTO.getAddress());
+//        landlord.setAvatar(apartmentRequestDTO.getAvatar());
+//        landlord.setEmail(apartmentRequestDTO.getEmail());
+//        landlord.setPhoneNumber(apartmentRequestDTO.getPhoneNumber());
+//
+//        landlord.setActivated(true);
+//        return landlord;
+//    }
+
     @Override
     public List<Apartment> searchApartmentsByCity(String city) {
         return apartmentRepository.findAllByCity(city);
@@ -115,6 +143,34 @@ public class ApartmentServiceImpl implements ApartmentService {
     @Override
     public List<Apartment> searchApartmentsByCityAndDistrict(String city, String district) {
         return apartmentRepository.findAllByCityAndDistrict(city, district);
+    }
+
+    @Override
+    public List<ApartmentDTO> filterApartmentByMonthlyRent(Long minMonthlyRent, Long maxMonthlyRent, Pageable pageable) {
+        Page<Apartment> apartmentPage;
+
+        if (minMonthlyRent != null && maxMonthlyRent != null) {
+            apartmentPage = apartmentRepository.findByMonthlyRentBetween(minMonthlyRent, maxMonthlyRent, pageable);
+        } else if (minMonthlyRent != null) {
+            apartmentPage = apartmentRepository.findByMonthlyRentGreaterThanEqual(minMonthlyRent, pageable);
+        } else if (maxMonthlyRent != null) {
+            apartmentPage = apartmentRepository.findByMonthlyRentLessThanEqual(maxMonthlyRent, pageable);
+        } else {
+            apartmentPage = apartmentRepository.findAll(pageable);
+        }
+        List<ApartmentDTO> apartmentDTOs = apartmentPage.getContent().stream()
+                .map(entity -> modelMapper.map(entity, ApartmentDTO.class))
+                .collect(Collectors.toList());
+
+
+        ApartmentResponse responseDTO = new ApartmentResponse();
+        responseDTO.setContent(apartmentDTOs);
+        responseDTO.setPageNo(apartmentPage.getNumber());
+        responseDTO.setPageSize(apartmentPage.getSize());
+        responseDTO.setTotalPages(apartmentPage.getTotalPages());
+        responseDTO.setTotalElements(apartmentPage.getTotalElements());
+
+        return apartmentDTOs;
     }
 
 }

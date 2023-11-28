@@ -13,5 +13,6 @@ public interface BuildingService {
     BuildingDTO remove(Long id);
 
     Building update(BuildingDTO buildingDTO);
-//    List<BuildingDTO> searchBuildingsByNameContains(String name);
+
+    List<BuildingDTO> searchBuildingsByNameContains(String name);
 }

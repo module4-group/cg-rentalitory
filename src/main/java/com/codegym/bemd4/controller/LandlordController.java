@@ -65,10 +65,9 @@ public class LandlordController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<LandlordDTO>> searchLandlordsByName(
-            @RequestParam String name
-    ) {
-        List<LandlordDTO> landlords  = landlordService.searchLandlordsByNameContains(name);
+    public ResponseEntity<List<LandlordDTO>> searchLandlordsByFullName(
+            @RequestParam("fullName") String fullName) {
+        List<LandlordDTO> landlords  = landlordService.searchLandlordsByFullNameContains(fullName);
         return ResponseEntity.ok(landlords);
     }
 }

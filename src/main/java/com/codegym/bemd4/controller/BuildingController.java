@@ -1,11 +1,6 @@
 package com.codegym.bemd4.controller;
 
-import com.codegym.bemd4.model.dto.entity.AddressDTO;
-import com.codegym.bemd4.model.dto.entity.ApartmentDTO;
 import com.codegym.bemd4.model.dto.entity.BuildingDTO;
-import com.codegym.bemd4.model.dto.entity.UserDTO;
-import com.codegym.bemd4.model.entity.building.Address;
-import com.codegym.bemd4.model.entity.building.Apartment;
 import com.codegym.bemd4.model.entity.building.Building;
 import com.codegym.bemd4.model.service.BuildingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @CrossOrigin("*")
@@ -50,8 +44,9 @@ public class BuildingController {
         }
         buildingDTO.setId(building.getId());
         buildingDTO.setActivated(true);
-        return new ResponseEntity<>(buildingService.update(buildingDTO),HttpStatus.OK);
+        return new ResponseEntity<>(buildingService.update(buildingDTO), HttpStatus.OK);
     }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<BuildingDTO> deleteBuilding(@PathVariable Long id) {
@@ -62,5 +57,12 @@ public class BuildingController {
         }
         buildingService.remove(id);
         return new ResponseEntity<>(building, HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<BuildingDTO>> searchBuilding(
+            @RequestParam("buildingName") String buildingName) {
+        List<BuildingDTO> buildings = buildingService.searchBuildingsByNameContains(buildingName);
+        return ResponseEntity.ok(buildings);
     }
 }

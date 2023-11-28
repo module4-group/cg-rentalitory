@@ -12,8 +12,6 @@ public interface LandlordService {
     LandlordDTO registerLandlord(LandlordDTO landlordDTO);
     LandlordDTO remove(Long id);
     Landlord update(LandlordDTO landlordDTO);
-    LandlordDTO findLandlordByUsername(String username);
-    LandlordDTO findLandlordByEmail(String email);
 
-    List<LandlordDTO> searchLandlordsByNameContains(String name);
+    List<LandlordDTO> searchLandlordsByFullNameContains(String fullName);
 }

@@ -1,9 +1,11 @@
 package com.codegym.bemd4.model.service.impl;
 
 import com.codegym.bemd4.model.dto.entity.BuildingDTO;
+
 import com.codegym.bemd4.model.entity.building.Address;
 import com.codegym.bemd4.model.entity.building.Building;
 import com.codegym.bemd4.model.entity.person.Landlord;
+
 import com.codegym.bemd4.model.repository.IAddressRepository;
 import com.codegym.bemd4.model.repository.IBuildingRepository;
 import com.codegym.bemd4.model.repository.ILandlordRepository;
@@ -88,4 +90,11 @@ public class BuildingServiceImpl implements BuildingService {
 //                .map(entity -> modelMapper.map(entity, BuildingDTO.class))
 //                .collect(Collectors.toList());
 //    }
+
+    public List<BuildingDTO> searchBuildingsByNameContains(String buildingName) {
+        List<Building> buildingEntities= buildingRepository.findByBuildingNameContainsIgnoreCase(buildingName);
+        return StreamSupport.stream(buildingEntities.spliterator(), true)
+                .map(entity -> modelMapper.map(entity, BuildingDTO.class))
+                .collect(Collectors.toList());
+    }
 }
