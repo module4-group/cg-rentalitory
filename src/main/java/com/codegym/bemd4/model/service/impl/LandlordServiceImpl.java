@@ -67,17 +67,12 @@ public class LandlordServiceImpl implements LandlordService {
         return removedDTO;
     }
 
-//    @Override
-//    public LandlordDTO findLandlordByUsername(String username) {
-//        Landlord landlord = landlordRepository.findLandlordByUsername(username);
-//        return modelMapper.map(landlord, LandlordDTO.class);
-//    }
-//
-//    @Override
-//    public LandlordDTO findLandlordByEmail(String email) {
-//        Landlord landlord = landlordRepository.findLandlordByEmail(email);
-//        return modelMapper.map(landlord,LandlordDTO.class);
-//    }
+    @Override
+    public Landlord update(LandlordDTO landlordDTO) {
+        Landlord landlord = modelMapper.map(landlordDTO,Landlord.class);
+        return landlordRepository.save(landlord);
+    }
+
 
     @Override
     public List<LandlordDTO> searchLandlordsByFullNameContains(String fullName) {

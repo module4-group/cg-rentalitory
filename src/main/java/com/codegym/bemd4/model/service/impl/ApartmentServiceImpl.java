@@ -1,12 +1,15 @@
 package com.codegym.bemd4.model.service.impl;
 
-import com.codegym.bemd4.converter.ApartmentConverter;
+
 import com.codegym.bemd4.model.dto.entity.ApartmentDTO;
 import com.codegym.bemd4.model.dto.request.ApartmentRequestDTO;
 import com.codegym.bemd4.model.dto.response.ApartmentResponse;
-import com.codegym.bemd4.model.entity.building.Address;
 import com.codegym.bemd4.model.entity.building.Apartment;
 import com.codegym.bemd4.model.entity.building.Building;
+
+import com.codegym.bemd4.model.repository.IApartmentRepository;
+import com.codegym.bemd4.model.repository.IBuildingRepository;
+
 import com.codegym.bemd4.model.entity.person.Landlord;
 import com.codegym.bemd4.model.repository.IAddressRepository;
 import com.codegym.bemd4.model.repository.IApartmentRepository;
@@ -79,6 +82,12 @@ public class ApartmentServiceImpl implements ApartmentService {
     }
 
     @Override
+    public ApartmentRequestDTO getApartmentRequestDTOById(Long apartmentId) {
+        Apartment apartment = apartmentRepository.findById(apartmentId).orElse(null);
+        return modelMapper.map(apartment, ApartmentRequestDTO.class);
+    }
+
+    @Override
     public ApartmentDTO remove(Long id) {
         Optional<Apartment> apartment = apartmentRepository.findById(id);
         if (apartment == null) {
@@ -100,7 +109,18 @@ public class ApartmentServiceImpl implements ApartmentService {
 
         apartmentRepository.save(apartment);
         return apartment;
+
     }
+
+    @Override
+    public Apartment update(ApartmentRequestDTO apartmentRequestDTO) {
+        Apartment apartment = modelMapper.map(apartmentRequestDTO,Apartment.class);
+        Building building = buildingRepository.findBuildingById(apartmentRequestDTO.getBuildingId());
+
+        apartment.setBuilding(building);
+        return apartmentRepository.save(apartment);
+    }
+
 
 //    private static Landlord getLandlord(ApartmentRequestDTO apartmentRequestDTO) {
 //        Landlord landlord = new Landlord();

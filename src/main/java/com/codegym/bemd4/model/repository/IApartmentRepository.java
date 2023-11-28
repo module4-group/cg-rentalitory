@@ -27,11 +27,11 @@ public interface IApartmentRepository extends JpaRepository<Apartment, Long> {
             "JOIN b.address ad " +
             "WHERE ad.city LIKE :city" +
             " AND ad.district LIKE :district")
+
     List<Apartment> findAllByCityAndDistrict(String city,String district);
 
     Page<Apartment> findByMonthlyRentBetween(Long minMonthlyRent, Long maxMonthlyRent,Pageable pageable);
     Page<Apartment> findByMonthlyRentGreaterThanEqual(Long minMonthlyRent, Pageable pageable);
     Page<Apartment> findByMonthlyRentLessThanEqual(Long maxMonthlyRent,Pageable pageable);
-
 
 }

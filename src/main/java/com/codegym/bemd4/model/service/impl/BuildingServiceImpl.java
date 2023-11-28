@@ -1,11 +1,11 @@
 package com.codegym.bemd4.model.service.impl;
 
 import com.codegym.bemd4.model.dto.entity.BuildingDTO;
-import com.codegym.bemd4.model.dto.entity.UserDTO;
+
 import com.codegym.bemd4.model.entity.building.Address;
 import com.codegym.bemd4.model.entity.building.Building;
 import com.codegym.bemd4.model.entity.person.Landlord;
-import com.codegym.bemd4.model.entity.person.User;
+
 import com.codegym.bemd4.model.repository.IAddressRepository;
 import com.codegym.bemd4.model.repository.IBuildingRepository;
 import com.codegym.bemd4.model.repository.ILandlordRepository;
@@ -34,6 +34,7 @@ public class BuildingServiceImpl implements BuildingService {
 
     @Autowired
     private final ModelMapper modelMapper;
+
     @Override
     public List<BuildingDTO> getBuilding() {
         Iterable<Building> buildingsEntities = buildingRepository.findAll();
@@ -60,9 +61,9 @@ public class BuildingServiceImpl implements BuildingService {
         building.setLandlord(landlord);
 
         buildingRepository.save(building);
-//        BuildingDTO savedDTO = modelMapper.map(building, BuildingDTO.class);
         return building;
     }
+
 
     @Override
     public BuildingDTO remove(Long id) {
@@ -77,6 +78,19 @@ public class BuildingServiceImpl implements BuildingService {
     }
 
     @Override
+    public Building update(BuildingDTO buildingDTO) {
+        Building building = modelMapper.map(buildingDTO, Building.class);
+        return buildingRepository.save(building);
+    }
+
+//    @Override
+//    public List<BuildingDTO> searchBuildingsByNameContains(String name) {
+//        List<Building> buildingEntities= buildingRepository.findByNameContainsIgnoreCase(name);
+//        return StreamSupport.stream(buildingEntities.spliterator(), true)
+//                .map(entity -> modelMapper.map(entity, BuildingDTO.class))
+//                .collect(Collectors.toList());
+//    }
+
     public List<BuildingDTO> searchBuildingsByNameContains(String buildingName) {
         List<Building> buildingEntities= buildingRepository.findByBuildingNameContainsIgnoreCase(buildingName);
         return StreamSupport.stream(buildingEntities.spliterator(), true)

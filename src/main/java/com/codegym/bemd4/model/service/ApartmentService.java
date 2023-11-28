@@ -11,13 +11,24 @@ import java.util.List;
 public interface ApartmentService {
 
     ApartmentResponse getApartments(int pageNo, int pageSize);
+
     List<ApartmentDTO> getAllApartments();
+
     ApartmentDTO getApartmentById(Long apartmentId);
+
+    ApartmentRequestDTO getApartmentRequestDTOById(Long apartmentId);
+
     Apartment create(ApartmentRequestDTO apartmentRequestDTO);
 
+    Apartment update(ApartmentRequestDTO apartmentRequestDTO);
+
+
     ApartmentDTO remove(Long id);
+
     List<Apartment> searchApartmentsByCity(String city);
+
     List<Apartment> searchApartmentsByCityAndDistrict(String city, String district);
+
     List<ApartmentDTO> filterApartmentByMonthlyRent(Long minMonthlyRent, Long maxMonthlyRent, Pageable pageable);
 
 }
