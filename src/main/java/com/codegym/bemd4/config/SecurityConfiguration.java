@@ -64,20 +64,11 @@ public class SecurityConfiguration  {
                 .csrf()
                 .disable();
         http
-<<<<<<< HEAD
                 .authorizeHttpRequests().requestMatchers("/**").permitAll();
 //                .requestMatchers( "/api/login", "/api/user/register").permitAll()
 //                .requestMatchers("/api/apartment/*").hasRole("LANDLORD")
 //                .requestMatchers("/api/user/**").hasRole("ADMIN")
 //                .anyRequest().authenticated();
-=======
-                .authorizeHttpRequests()
-                .requestMatchers( "/**").permitAll();
-//                .requestMatchers("/api/apartment/*").hasRole("LANDLORD")
-//                .requestMatchers("/api/user/**").hasRole("ADMIN")
-//                .anyRequest().authenticated();
-
->>>>>>> 177a14593d0c33aca09bd7b4bb01dc107216164e
 
         http
                 .exceptionHandling()

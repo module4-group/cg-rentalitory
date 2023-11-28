@@ -9,7 +9,6 @@ import lombok.Data;
 
 @Data
 public class CreateBuildingRequestDTO {
-    private Long id;
     private String buildingName;
     private String city;
     private String district;

@@ -82,11 +82,6 @@ public class LandlordServiceImpl implements LandlordService {
         Landlord landlord = landlordRepository.findLandlordByUsername(username);
         return landlord;
     }
-<<<<<<< HEAD
-=======
-
-
->>>>>>> 177a14593d0c33aca09bd7b4bb01dc107216164e
     @Override
     public List<LandlordDTO> searchLandlordsByFullNameContains(String fullName) {
         List<Landlord> landlordEntities= landlordRepository.findByFullNameContainsIgnoreCase(fullName);

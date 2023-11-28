@@ -1,7 +1,9 @@
 package com.codegym.bemd4.config;
 
 import com.codegym.bemd4.model.dto.entity.ApartmentDTO;
+import com.codegym.bemd4.model.dto.request.CreateBuildingRequestDTO;
 import com.codegym.bemd4.model.entity.building.Apartment;
+import com.codegym.bemd4.model.entity.building.Building;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,10 +29,10 @@ public class AppConfig implements WebMvcConfigurer {
     }
 
     @Bean
-    public ModelMapper modelMapper(){
-        ModelMapper modelMapper= new ModelMapper();
-        modelMapper.getConfiguration()
-                .setMatchingStrategy(MatchingStrategies.STANDARD);
+    public ModelMapper modelMapper() {
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STANDARD);
         return modelMapper;
     }
+
 }
