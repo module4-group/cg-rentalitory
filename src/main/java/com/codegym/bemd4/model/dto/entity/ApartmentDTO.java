@@ -1,6 +1,7 @@
 package com.codegym.bemd4.model.dto.entity;
 
 import com.codegym.bemd4.model.entity.building.Building;
+import com.codegym.bemd4.model.entity.person.Landlord;
 import lombok.Data;
 
 @Data
