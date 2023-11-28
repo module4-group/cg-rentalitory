@@ -125,4 +125,32 @@ public class ApartmentServiceImpl implements ApartmentService {
         return apartmentRepository.findAllByCityAndDistrict(city, district);
     }
 
+    @Override
+    public List<ApartmentDTO> filterApartmentByMonthlyRent(Long minMonthlyRent, Long maxMonthlyRent, Pageable pageable) {
+        Page<Apartment> apartmentPage;
+
+        if (minMonthlyRent != null && maxMonthlyRent != null) {
+            apartmentPage = apartmentRepository.findByMonthlyRentBetween(minMonthlyRent, maxMonthlyRent, pageable);
+        } else if (minMonthlyRent != null) {
+            apartmentPage = apartmentRepository.findByMonthlyRentGreaterThanEqual(minMonthlyRent, pageable);
+        } else if (maxMonthlyRent != null) {
+            apartmentPage = apartmentRepository.findByMonthlyRentLessThanEqual(maxMonthlyRent, pageable);
+        } else {
+            apartmentPage = apartmentRepository.findAll(pageable);
+        }
+        List<ApartmentDTO> apartmentDTOs = apartmentPage.getContent().stream()
+                .map(entity -> modelMapper.map(entity, ApartmentDTO.class))
+                .collect(Collectors.toList());
+
+
+        ApartmentResponse responseDTO = new ApartmentResponse();
+        responseDTO.setContent(apartmentDTOs);
+        responseDTO.setPageNo(apartmentPage.getNumber());
+        responseDTO.setPageSize(apartmentPage.getSize());
+        responseDTO.setTotalPages(apartmentPage.getTotalPages());
+        responseDTO.setTotalElements(apartmentPage.getTotalElements());
+
+        return apartmentDTOs;
+    }
+
 }

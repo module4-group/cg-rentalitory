@@ -76,11 +76,11 @@ public class BuildingServiceImpl implements BuildingService {
         return removedDTO;
     }
 
-//    @Override
-//    public List<BuildingDTO> searchBuildingsByNameContains(String name) {
-//        List<Building> buildingEntities= buildingRepository.findByNameContainsIgnoreCase(name);
-//        return StreamSupport.stream(buildingEntities.spliterator(), true)
-//                .map(entity -> modelMapper.map(entity, BuildingDTO.class))
-//                .collect(Collectors.toList());
-//    }
+    @Override
+    public List<BuildingDTO> searchBuildingsByNameContains(String buildingName) {
+        List<Building> buildingEntities= buildingRepository.findByBuildingNameContainsIgnoreCase(buildingName);
+        return StreamSupport.stream(buildingEntities.spliterator(), true)
+                .map(entity -> modelMapper.map(entity, BuildingDTO.class))
+                .collect(Collectors.toList());
+    }
 }

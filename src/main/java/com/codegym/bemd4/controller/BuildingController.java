@@ -16,7 +16,7 @@ import java.util.Optional;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/api/building")
+@RequestMapping("/api/buildings")
 public class BuildingController {
     @Autowired
     BuildingService buildingService;
@@ -49,5 +49,12 @@ public class BuildingController {
         }
         buildingService.remove(id);
         return new ResponseEntity<>(building, HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<BuildingDTO>> searchBuilding(
+            @RequestParam("buildingName")String buildingName){
+        List<BuildingDTO> buildings = buildingService.searchBuildingsByNameContains(buildingName);
+        return ResponseEntity.ok(buildings);
     }
 }
