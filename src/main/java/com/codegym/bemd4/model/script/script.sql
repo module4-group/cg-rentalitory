@@ -34,3 +34,7 @@ insert into users(avatar,email,fullname,`password`,phone_number,username) values
 insert into users(avatar,email,fullname,`password`,phone_number,username) values("abc","thinh@gmail.com","thinh phan","123",09783247614,"thinh");
 insert into users(avatar,email,fullname,`password`,phone_number,username) values("abc","thang@gmail.com","thang le","123",09783247615,"thang");
 insert into users(avatar,email,fullname,`password`,phone_number,username) values("abc","nhan@gmail.com","nhan tran","123",09783247616,"nhan");
+
+insert into roles(description,name) values ("","ROLE_ADMIN");
+insert into roles(description,name) values ("","ROLE_USER");
+insert into roles(description,name) values ("","ROLE_LANDLORD");
