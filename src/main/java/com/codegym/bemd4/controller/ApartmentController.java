@@ -34,6 +34,11 @@ public class ApartmentController {
 //        return new ResponseEntity<>(apartmentDTOS, HttpStatus.OK);
 //    }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<ApartmentDTO> getApartmentById(@PathVariable Long id){
+       return new ResponseEntity<>(apartmentService.getApartmentById(id),HttpStatus.OK);
+    }
+
     @GetMapping
     public ResponseEntity<ApartmentResponse> getApartments(
             @RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
@@ -59,6 +64,7 @@ public class ApartmentController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         apartmentDTO.setId(apartment.getId());
+
         return new ResponseEntity<>(apartmentService.update(apartmentDTO), HttpStatus.OK);
     }
 
@@ -66,6 +72,16 @@ public class ApartmentController {
     public ResponseEntity<Apartment> deleteApartment(@PathVariable Long id) {
         Optional<ApartmentDTO> apartmentOptional = Optional.ofNullable(apartmentService.getApartmentById(id));
         if (!apartmentOptional.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        apartmentService.remove(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<Apartment> revertApartment(@PathVariable Long id) {
+        ApartmentDTO apartmentDTO = apartmentService.getApartmentById(id);
+        if (apartmentDTO == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         apartmentService.remove(id);
