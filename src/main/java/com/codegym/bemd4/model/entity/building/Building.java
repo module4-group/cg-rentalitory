@@ -29,8 +29,7 @@ public class Building {
     private Landlord landlord;
     @Column(name = "activated", nullable = false, columnDefinition = "BIT default true")
     private Boolean activated;
-
-//    @OneToMany(mappedBy = "building")
-//    List<Apartment> apartments;
+    @OneToMany(fetch= FetchType.EAGER)
+    List<Apartment> apartments;
 
 }

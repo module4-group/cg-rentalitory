@@ -1,15 +1,12 @@
 package com.codegym.bemd4.model.service.impl;
 
 import com.codegym.bemd4.model.dto.entity.LandlordDTO;
-import com.codegym.bemd4.model.dto.entity.UserDTO;
-import com.codegym.bemd4.model.entity.building.Building;
 import com.codegym.bemd4.model.entity.person.Landlord;
 import com.codegym.bemd4.model.entity.person.Role;
-import com.codegym.bemd4.model.entity.person.User;
 import com.codegym.bemd4.model.repository.ILandlordRepository;
 import com.codegym.bemd4.model.repository.IRoleRepository;
-import com.codegym.bemd4.model.repository.IUserRepository;
 import com.codegym.bemd4.model.service.LandlordService;
+import com.codegym.bemd4.security.JwtTokenProvider;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -29,7 +26,9 @@ public class LandlordServiceImpl implements LandlordService {
     @Autowired
     private ModelMapper modelMapper;
     @Autowired
-    IRoleRepository roleRepository;
+    private IRoleRepository roleRepository;
+    @Autowired
+    private JwtTokenProvider jwtTokenProvider;
     @Override
     public List<LandlordDTO> getLandlord() {
         Iterable<Landlord> landlordsEntities = landlordRepository.findAll();
@@ -73,6 +72,14 @@ public class LandlordServiceImpl implements LandlordService {
         return landlordRepository.save(landlord);
     }
 
+
+    @Override
+    public Landlord getLandlordFromToken(String token) {
+        String username = jwtTokenProvider.getUsernameFromJWT(token);
+        LandlordDTO landlordDTO = findLandlordByUsername(username);
+        Landlord landlord = modelMapper.map(landlordDTO, Landlord.class);
+        return landlord;
+    }
 
     @Override
     public List<LandlordDTO> searchLandlordsByFullNameContains(String fullName) {

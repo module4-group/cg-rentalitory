@@ -6,7 +6,10 @@ import com.codegym.bemd4.model.dto.request.ApartmentRequestDTO;
 import com.codegym.bemd4.model.dto.response.ApartmentResponse;
 import com.codegym.bemd4.model.dto.response.ApartmentResponseDTO;
 import com.codegym.bemd4.model.entity.building.Apartment;
+import com.codegym.bemd4.model.entity.person.Landlord;
 import com.codegym.bemd4.model.service.ApartmentService;
+import com.codegym.bemd4.model.service.LandlordService;
+import com.codegym.bemd4.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -27,19 +30,8 @@ public class ApartmentController {
     @Autowired
     private ApartmentService apartmentService;
 
-//    @GetMapping
-//    public ResponseEntity<List<ApartmentDTO>> getAllApartment() {
-//        List<ApartmentDTO> apartmentDTOS = apartmentService.getAllApartments();
-//        if (apartmentDTOS.isEmpty()) {
-//            return new ResponseEntity<List<ApartmentDTO>>(HttpStatus.NO_CONTENT);
-//        }
-//        return new ResponseEntity<>(apartmentDTOS, HttpStatus.OK);
-//    }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<ApartmentDTO> getApartmentById(@PathVariable Long id){
-       return new ResponseEntity<>(apartmentService.getApartmentById(id),HttpStatus.OK);
-    }
+
 
     @GetMapping
     public ResponseEntity<ApartmentResponse> getApartments(
@@ -58,6 +50,9 @@ public class ApartmentController {
         Apartment newApartment = apartmentService.create(apartmentRequestDTO);
         return new ResponseEntity<>(newApartment, HttpStatus.CREATED);
     }
+    @GetMapping("/{id}")
+    public ResponseEntity<ApartmentDTO> getApartmentById(@PathVariable Long id){
+        return new ResponseEntity<>(apartmentService.getApartmentById(id),HttpStatus.OK);
 
     @PutMapping("{id}")
     public ResponseEntity<Apartment> updateApartment(@PathVariable Long id, @RequestBody ApartmentRequestDTO apartmentDTO) {
@@ -81,15 +76,6 @@ public class ApartmentController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-//    @DeleteMapping("{id}")
-//    public ResponseEntity<Apartment> revertApartment(@PathVariable Long id) {
-//        ApartmentDTO apartmentDTO = apartmentService.getApartmentById(id);
-//        if (apartmentDTO == null) {
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        }
-//        apartmentService.remove(id);
-//        return new ResponseEntity<>(HttpStatus.OK);
-//    }
 
     @GetMapping("/search")
     public ResponseEntity<List<Apartment>> searchApartmentsByCityAndDistrict(
