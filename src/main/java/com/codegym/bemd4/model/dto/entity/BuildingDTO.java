@@ -7,6 +7,7 @@ public class BuildingDTO {
 
     private Long id;
     private String buildingName;
+    private Boolean activated;
     private Long addressId;
     private Long landlordId;
 }

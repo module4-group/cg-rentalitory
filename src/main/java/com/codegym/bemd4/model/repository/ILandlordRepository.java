@@ -12,7 +12,6 @@ import java.util.List;
 public interface ILandlordRepository extends JpaRepository<Landlord,Long> {
     Landlord findLandlordById(Long id);
 
-    Landlord findLandlordByUsername(String username);
 
     Landlord findLandlordByEmail(String email);
 
@@ -20,4 +19,5 @@ public interface ILandlordRepository extends JpaRepository<Landlord,Long> {
     @Query("SELECT r.name FROM Role r JOIN r.landlords l WHERE l.username = :username")
     List<String> findRolesNamesByUsername(@Param("username") String username);
 
+    List<Landlord> findByFullNameContainsIgnoreCase(String fullName);
 }

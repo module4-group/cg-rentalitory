@@ -5,6 +5,8 @@ import com.codegym.bemd4.model.dto.request.ApartmentRequestDTO;
 import com.codegym.bemd4.model.dto.response.ApartmentResponse;
 import com.codegym.bemd4.model.entity.building.Apartment;
 import com.codegym.bemd4.model.entity.building.Building;
+import com.codegym.bemd4.model.entity.person.Landlord;
+import com.codegym.bemd4.model.repository.IAddressRepository;
 import com.codegym.bemd4.model.repository.IApartmentRepository;
 import com.codegym.bemd4.model.repository.IBuildingRepository;
 import com.codegym.bemd4.model.service.ApartmentService;
@@ -68,6 +70,12 @@ public class ApartmentServiceImpl implements ApartmentService {
     }
 
     @Override
+    public ApartmentRequestDTO getApartmentRequestDTOById(Long apartmentId) {
+        Apartment apartment = apartmentRepository.findById(apartmentId).orElse(null);
+        return modelMapper.map(apartment, ApartmentRequestDTO.class);
+    }
+
+    @Override
     public ApartmentDTO remove(Long id) {
         Optional<Apartment> apartment = apartmentRepository.findById(id);
         if (apartment == null) {
@@ -88,6 +96,16 @@ public class ApartmentServiceImpl implements ApartmentService {
 
         apartmentRepository.save(apartment);
         return apartment;
+
+    }
+
+    @Override
+    public Apartment update(ApartmentRequestDTO apartmentRequestDTO) {
+        Apartment apartment = modelMapper.map(apartmentRequestDTO,Apartment.class);
+        Building building = buildingRepository.findBuildingById(apartmentRequestDTO.getBuildingId());
+
+        apartment.setBuilding(building);
+        return apartmentRepository.save(apartment);
     }
 
     @Override
@@ -97,6 +115,34 @@ public class ApartmentServiceImpl implements ApartmentService {
     @Override
     public List<Apartment> searchApartmentsByCityAndDistrict(String city, String district) {
         return apartmentRepository.findAllByCityAndDistrict(city, district);
+    }
+
+    @Override
+    public List<ApartmentDTO> filterApartmentByMonthlyRent(Long minMonthlyRent, Long maxMonthlyRent, Pageable pageable) {
+        Page<Apartment> apartmentPage;
+
+        if (minMonthlyRent != null && maxMonthlyRent != null) {
+            apartmentPage = apartmentRepository.findByMonthlyRentBetween(minMonthlyRent, maxMonthlyRent, pageable);
+        } else if (minMonthlyRent != null) {
+            apartmentPage = apartmentRepository.findByMonthlyRentGreaterThanEqual(minMonthlyRent, pageable);
+        } else if (maxMonthlyRent != null) {
+            apartmentPage = apartmentRepository.findByMonthlyRentLessThanEqual(maxMonthlyRent, pageable);
+        } else {
+            apartmentPage = apartmentRepository.findAll(pageable);
+        }
+        List<ApartmentDTO> apartmentDTOs = apartmentPage.getContent().stream()
+                .map(entity -> modelMapper.map(entity, ApartmentDTO.class))
+                .collect(Collectors.toList());
+
+
+        ApartmentResponse responseDTO = new ApartmentResponse();
+        responseDTO.setContent(apartmentDTOs);
+        responseDTO.setPageNo(apartmentPage.getNumber());
+        responseDTO.setPageSize(apartmentPage.getSize());
+        responseDTO.setTotalPages(apartmentPage.getTotalPages());
+        responseDTO.setTotalElements(apartmentPage.getTotalElements());
+
+        return apartmentDTOs;
     }
 
 }
