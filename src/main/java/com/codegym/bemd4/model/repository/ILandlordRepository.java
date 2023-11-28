@@ -23,4 +23,6 @@ public interface ILandlordRepository extends JpaRepository<Landlord,Long> {
     @Query("SELECT r.name FROM Role r JOIN r.landlords l WHERE l.username = :username")
     List<String> findRolesNamesByUsername(@Param("username") String username);
 
+    boolean existsByUsername(String username);
+
 }
