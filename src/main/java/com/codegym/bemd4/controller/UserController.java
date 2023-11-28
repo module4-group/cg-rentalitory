@@ -1,5 +1,6 @@
 package com.codegym.bemd4.controller;
 
+import com.codegym.bemd4.model.dto.entity.LandlordDTO;
 import com.codegym.bemd4.model.dto.entity.UserDTO;
 import com.codegym.bemd4.model.entity.person.User;
 import com.codegym.bemd4.model.service.UserService;
@@ -19,6 +20,7 @@ public class UserController {
     @Autowired
     UserService userService;
 
+
     @GetMapping
     public ResponseEntity<List<UserDTO>> getUsers() {
         List<UserDTO> UserDTOs = userService.getUsers();
@@ -34,11 +36,12 @@ public class UserController {
         if (userDTO==null){
             return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
         }
+
         return new ResponseEntity<>(userService.registerUser(userDTO), HttpStatus.OK);
     }
-    @PutMapping("/update")
-    public ResponseEntity<UserDTO> updateUser(@RequestBody UserDTO userDTO) {
-
+    @PutMapping("/update/{id}")
+    public ResponseEntity<UserDTO> updateUser(@RequestBody UserDTO userDTO, @PathVariable Long id) {
+        UserDTO user = userService.getUserById(id);
         if (userDTO==null){
             return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
         }

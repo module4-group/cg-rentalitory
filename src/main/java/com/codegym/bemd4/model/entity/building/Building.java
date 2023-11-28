@@ -1,6 +1,7 @@
 package com.codegym.bemd4.model.entity.building;
 
 import com.codegym.bemd4.model.entity.person.Landlord;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,6 +31,7 @@ public class Building {
     @Column(name = "activated", nullable = false, columnDefinition = "BIT default true")
     private Boolean activated;
     @OneToMany(fetch= FetchType.EAGER)
+    @JsonIgnore
     List<Apartment> apartments;
 
 }
