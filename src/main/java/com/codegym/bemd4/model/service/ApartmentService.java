@@ -22,10 +22,7 @@ public interface ApartmentService {
 
     Apartment update(ApartmentRequestDTO apartmentRequestDTO);
     Apartment convert(ApartmentRequestDTO apartmentRequestDTO);
-
-
     ApartmentDTO remove(Long id);
-
     List<Apartment> searchApartmentsByCity(String city);
 
     List<Apartment> searchApartmentsByCityAndDistrict(String city, String district);

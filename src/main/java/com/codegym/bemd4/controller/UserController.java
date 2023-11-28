@@ -42,7 +42,7 @@ public class UserController {
         if (userDTO==null){
             return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(userService.registerUser(userDTO), HttpStatus.OK);
+        return new ResponseEntity<>(userService.update(userDTO), HttpStatus.OK);
     }
 
 

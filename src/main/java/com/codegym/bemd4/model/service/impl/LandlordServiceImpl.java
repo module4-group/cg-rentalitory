@@ -36,13 +36,11 @@ public class LandlordServiceImpl implements LandlordService {
                 .map(entity -> modelMapper.map(entity, LandlordDTO.class))
                 .collect(Collectors.toList());
     }
-
     @Override
     public LandlordDTO getLandlordById(Long landlordId) {
         Landlord landlord = landlordRepository.findById(landlordId).orElse(null);
         return modelMapper.map(landlord, LandlordDTO.class);
     }
-
     @Override
     public LandlordDTO registerLandlord(LandlordDTO landlordDTO) {
         Landlord landlord = modelMapper.map(landlordDTO, Landlord.class);
@@ -53,7 +51,6 @@ public class LandlordServiceImpl implements LandlordService {
         LandlordDTO savedDTO = modelMapper.map(landlord, LandlordDTO.class);
         return savedDTO;
     }
-
     @Override
     public LandlordDTO remove(Long id) {
         Landlord landlord= landlordRepository.findLandlordById(id);
@@ -65,22 +62,17 @@ public class LandlordServiceImpl implements LandlordService {
         LandlordDTO removedDTO = modelMapper.map(landlord, LandlordDTO.class);
         return removedDTO;
     }
-
     @Override
     public Landlord update(LandlordDTO landlordDTO) {
         Landlord landlord = modelMapper.map(landlordDTO,Landlord.class);
         return landlordRepository.save(landlord);
     }
-
-
     @Override
     public Landlord getLandlordFromToken(String token) {
         String username = jwtTokenProvider.getUsernameFromJWT(token);
         Landlord landlord = landlordRepository.findLandlordByUsername(username);
-
         return landlord;
     }
-
     @Override
     public List<LandlordDTO> searchLandlordsByFullNameContains(String fullName) {
         List<Landlord> landlordEntities= landlordRepository.findByFullNameContainsIgnoreCase(fullName);

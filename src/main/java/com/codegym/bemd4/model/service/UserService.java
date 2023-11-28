@@ -15,4 +15,6 @@ public interface UserService {
     UserDTO findUserByEmail(String email);
 
     List<UserDTO> searchUsersByNameContains(String name);
+
+    UserDTO update(UserDTO userDTO);
 }
