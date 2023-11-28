@@ -24,7 +24,7 @@ public class                Landlord implements UserLoginDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private Integer id;
+    private Long id;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "landlord_roles",

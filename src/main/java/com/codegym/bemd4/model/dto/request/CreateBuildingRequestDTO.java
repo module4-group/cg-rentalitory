@@ -11,5 +11,10 @@ import lombok.Data;
 public class CreateBuildingRequestDTO {
     private Long id;
     private String buildingName;
-    private Address address;
+    private String city;
+    private String district;
+    private String ward;
+    private String houseNumber;
+    private boolean activated;
+    private Long landlordId;
 }

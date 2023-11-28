@@ -20,6 +20,7 @@ public class UserController {
     @Autowired
     UserService userService;
 
+
     @GetMapping
     public ResponseEntity<List<UserDTO>> getUsers() {
         List<UserDTO> UserDTOs = userService.getUsers();
@@ -35,6 +36,7 @@ public class UserController {
         if (userDTO==null){
             return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
         }
+
         return new ResponseEntity<>(userService.registerUser(userDTO), HttpStatus.OK);
     }
     @PutMapping("/update/{id}")
