@@ -37,4 +37,8 @@ insert into users(avatar,email,fullname,`password`,phone_number,username) values
 
 insert into roles(description,name) values ("","ROLE_ADMIN");
 insert into roles(description,name) values ("","ROLE_USER");
+<<<<<<< HEAD
 insert into roles(description,name) values ("","ROLE_LANDLORD");
+=======
+insert into roles(description,name) values ("","ROLE_LANDLORD");
+>>>>>>> cca4ff5f8ffa59edc085155063c127412bc8a4f9

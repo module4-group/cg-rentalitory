@@ -14,4 +14,5 @@ public interface LandlordService {
     Landlord update(LandlordDTO landlordDTO);
     Landlord getLandlordFromToken(String token);
     List<LandlordDTO> searchLandlordsByFullNameContains(String fullName);
+
 }

@@ -92,13 +92,6 @@ public class BuildingServiceImpl implements BuildingService {
         return buildingRepository.save(building);
     }
 
-//    @Override
-//    public List<BuildingDTO> searchBuildingsByNameContains(String name) {
-//        List<Building> buildingEntities= buildingRepository.findByNameContainsIgnoreCase(name);
-//        return StreamSupport.stream(buildingEntities.spliterator(), true)
-//                .map(entity -> modelMapper.map(entity, BuildingDTO.class))
-//                .collect(Collectors.toList());
-//    }
 
     public List<BuildingDTO> searchBuildingsByNameContains(String buildingName) {
         List<Building> buildingEntities= buildingRepository.findByBuildingNameContainsIgnoreCase(buildingName);

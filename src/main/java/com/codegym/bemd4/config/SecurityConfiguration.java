@@ -66,11 +66,12 @@ public class SecurityConfiguration  {
                 .disable();
         http
                 .authorizeHttpRequests()
-                .requestMatchers( "/**").permitAll()
+                .requestMatchers( "/**").permitAll();
 //                .requestMatchers("/api/apartment/*").hasRole("LANDLORD")
 //                .requestMatchers("/api/user/**").hasRole("ADMIN")
 //                .anyRequest().authenticated();
-;
+
+
         http
                 .exceptionHandling()
                 .authenticationEntryPoint(jwtAuthenticationEntryPoint)
