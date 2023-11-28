@@ -51,9 +51,9 @@ public class ApartmentController {
         return new ResponseEntity<>(newApartment, HttpStatus.CREATED);
     }
     @GetMapping("/{id}")
-    public ResponseEntity<ApartmentDTO> getApartmentById(@PathVariable Long id){
-        return new ResponseEntity<>(apartmentService.getApartmentById(id),HttpStatus.OK);
-
+    public ResponseEntity<ApartmentDTO> getApartmentById(@PathVariable Long id) {
+        return new ResponseEntity<>(apartmentService.getApartmentById(id), HttpStatus.OK);
+    }
     @PutMapping("{id}")
     public ResponseEntity<Apartment> updateApartment(@PathVariable Long id, @RequestBody ApartmentRequestDTO apartmentDTO) {
         ApartmentRequestDTO apartment = apartmentService.getApartmentRequestDTOById(id);
@@ -64,6 +64,18 @@ public class ApartmentController {
 
         return new ResponseEntity<>(apartmentService.update(apartmentDTO), HttpStatus.OK);
 
+    }
+
+    @PutMapping("covert/{id}")
+    public ResponseEntity<Apartment> convertApartment(@PathVariable Long id) {
+        ApartmentRequestDTO apartment = apartmentService.getApartmentRequestDTOById(id);
+//        if (apartmentDTO == null) {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//        apartmentDTO.setId(apartment.getId());
+//
+//        return new ResponseEntity<>(apartmentService.convert(apartmentDTO), HttpStatus.OK);
+    return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
     }
 
     @DeleteMapping("{id}")

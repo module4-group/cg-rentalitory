@@ -76,8 +76,8 @@ public class LandlordServiceImpl implements LandlordService {
     @Override
     public Landlord getLandlordFromToken(String token) {
         String username = jwtTokenProvider.getUsernameFromJWT(token);
-        LandlordDTO landlordDTO = findLandlordByUsername(username);
-        Landlord landlord = modelMapper.map(landlordDTO, Landlord.class);
+        Landlord landlord = landlordRepository.findLandlordByUsername(username);
+
         return landlord;
     }
 
