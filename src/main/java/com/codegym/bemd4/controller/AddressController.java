@@ -1,8 +1,7 @@
 package com.codegym.bemd4.controller;
 
 import com.codegym.bemd4.model.dto.entity.AddressDTO;
-import com.codegym.bemd4.model.dto.entity.ApartmentDTO;
-import com.codegym.bemd4.model.dto.entity.BuildingDTO;
+
 import com.codegym.bemd4.model.entity.building.Address;
 import com.codegym.bemd4.model.service.AddressService;
 import org.modelmapper.ModelMapper;
@@ -20,8 +19,6 @@ public class AddressController {
     @Autowired
     private AddressService addressService;
 
-    @Autowired
-    private ModelMapper modelMapper;
 
     @GetMapping
     public ResponseEntity<List<AddressDTO>> getAddress() {

@@ -67,16 +67,11 @@ public class LandlordServiceImpl implements LandlordService {
     }
 
     @Override
-    public LandlordDTO findLandlordByUsername(String username) {
-        Landlord landlord = landlordRepository.findLandlordByUsername(username);
-        return modelMapper.map(landlord, LandlordDTO.class);
+    public Landlord update(LandlordDTO landlordDTO) {
+        Landlord landlord = modelMapper.map(landlordDTO,Landlord.class);
+        return landlordRepository.save(landlord);
     }
 
-    @Override
-    public LandlordDTO findLandlordByEmail(String email) {
-        Landlord landlord = landlordRepository.findLandlordByEmail(email);
-        return modelMapper.map(landlord,LandlordDTO.class);
-    }
 
     @Override
     public Landlord getLandlordFromToken(String token) {
@@ -87,8 +82,8 @@ public class LandlordServiceImpl implements LandlordService {
     }
 
     @Override
-    public List<LandlordDTO> searchLandlordsByNameContains(String name) {
-        List<Landlord> landlordEntities= landlordRepository.findByUsernameContainsIgnoreCase(name);
+    public List<LandlordDTO> searchLandlordsByFullNameContains(String fullName) {
+        List<Landlord> landlordEntities= landlordRepository.findByFullNameContainsIgnoreCase(fullName);
         return StreamSupport.stream(landlordEntities.spliterator(), true)
                 .map(entity -> modelMapper.map(entity, LandlordDTO.class))
                 .collect(Collectors.toList());
