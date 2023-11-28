@@ -23,15 +23,22 @@ public class Building {
     @Column(name = "building_name", length = 200, nullable = false, unique = true)
     private String buildingName;
     @OneToOne
-    @JoinColumn(name = "address_id")
-    private Address address;
-    @OneToOne
-    @JoinColumn(name = "landlord_id")
-    private Landlord landlord;
+    @JoinColumn(name="address_id")
+    Address address;
+
+    @ManyToOne
+    @JoinColumn(name="landlord_id")
+    Landlord landlord;
+
     @Column(name = "activated", nullable = false, columnDefinition = "BIT default true")
     private Boolean activated;
-    @OneToMany(fetch= FetchType.EAGER)
+
+    @OneToMany(mappedBy = "building")
     @JsonIgnore
     List<Apartment> apartments;
 
+    public Building(String buildingName, Boolean activated) {
+        this.buildingName = buildingName;
+        this.activated = activated;
+    }
 }

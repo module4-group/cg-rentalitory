@@ -53,24 +53,20 @@ public class BuildingServiceImpl implements BuildingService {
     @Override
     public Building createBuilding(CreateBuildingRequestDTO createBuildingRequestDTO) {
 
-        Address address = new Address();
-        address.setCity(createBuildingRequestDTO.getCity());
-        address.setWard(createBuildingRequestDTO.getWard());
-        address.setDistrict(createBuildingRequestDTO.getDistrict());
-        address.setHouseNumber(createBuildingRequestDTO.getHouseNumber());
-        address.setActivated(true);
-
+        Address address = new Address(createBuildingRequestDTO.getCity(),createBuildingRequestDTO.getDistrict(),createBuildingRequestDTO.getWard(),createBuildingRequestDTO.getHouseNumber(),true);
         addressRepository.save(address);
 
-        Landlord landlord = landlordRepository.findLandlordById(createBuildingRequestDTO.getLandlordId()) ;
-        Building building = modelMapper.map(createBuildingRequestDTO, Building.class);
-        building.setActivated(true);
 
+        Building building = new Building(createBuildingRequestDTO.getBuildingName(), true);
+        Landlord landlord = landlordRepository.findLandlordById(createBuildingRequestDTO.getLandlordId()) ;
+
+        building.setActivated(true);
         building.setAddress(address);
         building.setLandlord(landlord);
         landlord.getBuildings().add(building);
         landlordRepository.save(landlord);
         buildingRepository.save(building);
+
         return building;
     }
 
