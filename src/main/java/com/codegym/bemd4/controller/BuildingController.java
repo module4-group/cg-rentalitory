@@ -1,6 +1,7 @@
 package com.codegym.bemd4.controller;
 
 import com.codegym.bemd4.model.dto.entity.BuildingDTO;
+import com.codegym.bemd4.model.dto.request.CreateBuildingRequestDTO;
 import com.codegym.bemd4.model.entity.building.Building;
 import com.codegym.bemd4.model.service.BuildingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,20 +19,20 @@ public class BuildingController {
     BuildingService buildingService;
 
     @GetMapping
-    public ResponseEntity<List<BuildingDTO>> getBuilding() {
-        List<BuildingDTO> BuildingDTOs = buildingService.getBuilding();
-        if (BuildingDTOs.isEmpty()) {
-            return new ResponseEntity<List<BuildingDTO>>(HttpStatus.NO_CONTENT);
+    public ResponseEntity<List<Building>> getBuilding() {
+        List<Building> building = buildingService.getBuilding();
+        if (building.isEmpty()) {
+            return new ResponseEntity<List<Building>>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<>(BuildingDTOs, HttpStatus.OK);
+        return new ResponseEntity<>(building, HttpStatus.OK);
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Building> createBuilding(@RequestBody BuildingDTO buildingDTO) {
-        if (buildingDTO == null) {
+    public ResponseEntity<Building> createBuilding(@RequestBody CreateBuildingRequestDTO createBuildingRequestDTO) {
+        if (createBuildingRequestDTO == null) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
-        Building building = buildingService.createBuilding(buildingDTO);
+        Building building = buildingService.createBuilding(createBuildingRequestDTO);
         return new ResponseEntity<>(building, HttpStatus.OK);
         // 1 building chỉ có 1 address và 1 landlord
     }

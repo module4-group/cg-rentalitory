@@ -49,7 +49,7 @@ public class SecurityConfiguration  {
         corsConfig.addAllowedHeader("*");
         corsConfig.addAllowedMethod("*");
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/*", corsConfig);
+        source.registerCorsConfiguration("/**", corsConfig);
         return source;
     }
     @Bean
@@ -66,11 +66,11 @@ public class SecurityConfiguration  {
                 .disable();
         http
                 .authorizeHttpRequests()
-                .requestMatchers( "/api/login", "/api/user/register").permitAll()
-                .requestMatchers("/api/apartment/*").hasRole("LANDLORD")
-                .requestMatchers("/api/user/**").hasRole("ADMIN")
-                .anyRequest().authenticated();
-
+                .requestMatchers( "/**").permitAll()
+//                .requestMatchers("/api/apartment/*").hasRole("LANDLORD")
+//                .requestMatchers("/api/user/**").hasRole("ADMIN")
+//                .anyRequest().authenticated();
+;
         http
                 .exceptionHandling()
                 .authenticationEntryPoint(jwtAuthenticationEntryPoint)
