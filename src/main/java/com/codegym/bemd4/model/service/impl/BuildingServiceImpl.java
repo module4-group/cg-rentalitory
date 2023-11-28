@@ -67,7 +67,6 @@ public class BuildingServiceImpl implements BuildingService {
         building.setActivated(true);
 
         building.setAddress(address);
-        building.setLandlord(landlord);
         landlord.getBuildings().add(building);
         landlordRepository.save(landlord);
         buildingRepository.save(building);
