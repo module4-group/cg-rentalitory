@@ -21,6 +21,7 @@ public interface ApartmentService {
     Apartment create(ApartmentRequestDTO apartmentRequestDTO);
 
     Apartment update(ApartmentRequestDTO apartmentRequestDTO);
+    Apartment convert(ApartmentRequestDTO apartmentRequestDTO);
 
 
     ApartmentDTO remove(Long id);

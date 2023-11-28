@@ -71,6 +71,18 @@ public class ApartmentController {
 
     }
 
+    @PutMapping("covert/{id}")
+    public ResponseEntity<Apartment> convertApartment(@PathVariable Long id) {
+        ApartmentRequestDTO apartment = apartmentService.getApartmentRequestDTOById(id);
+//        if (apartmentDTO == null) {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//        apartmentDTO.setId(apartment.getId());
+//
+//        return new ResponseEntity<>(apartmentService.convert(apartmentDTO), HttpStatus.OK);
+    return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
+    }
+
     @DeleteMapping("{id}")
     public ResponseEntity<Apartment> deleteApartment(@PathVariable Long id) {
         Optional<ApartmentDTO> apartmentOptional = Optional.ofNullable(apartmentService.getApartmentById(id));
