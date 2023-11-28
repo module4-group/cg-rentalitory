@@ -51,8 +51,9 @@ public class ApartmentController {
         return new ResponseEntity<>(newApartment, HttpStatus.CREATED);
     }
     @GetMapping("/{id}")
-    public ResponseEntity<ApartmentDTO> getApartmentById(@PathVariable Long id){
-        return new ResponseEntity<>(apartmentService.getApartmentById(id),HttpStatus.OK);
+    public ResponseEntity<ApartmentDTO> getApartmentById(@PathVariable Long id) {
+        return new ResponseEntity<>(apartmentService.getApartmentById(id), HttpStatus.OK);
+    }
 
     @PutMapping("{id}")
     public ResponseEntity<Apartment> updateApartment(@PathVariable Long id, @RequestBody ApartmentRequestDTO apartmentDTO) {
