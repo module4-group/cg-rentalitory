@@ -72,6 +72,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO registerUser(UserDTO userDTO) {
         User user = modelMapper.map(userDTO, User.class);
+        if (userRepository.existsByUsername(user.getUsername())) {
+            throw new IllegalArgumentException("Username already exists");
+        }
         if (!userDTO.getPassword().isEmpty()) {
             String hashedPassword = BCrypt.hashpw(userDTO.getPassword(), BCrypt.gensalt(10));
             user.setPassword(hashedPassword);

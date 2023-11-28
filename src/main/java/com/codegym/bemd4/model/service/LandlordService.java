@@ -12,8 +12,6 @@ public interface LandlordService {
     LandlordDTO registerLandlord(LandlordDTO landlordDTO);
     LandlordDTO remove(Long id);
     Landlord update(LandlordDTO landlordDTO);
-
     Landlord getLandlordFromToken(String token);
-
     List<LandlordDTO> searchLandlordsByFullNameContains(String fullName);
 }
