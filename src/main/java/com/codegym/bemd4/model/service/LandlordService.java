@@ -1,13 +1,13 @@
 package com.codegym.bemd4.model.service;
 
 import com.codegym.bemd4.model.dto.entity.LandlordDTO;
-import com.codegym.bemd4.model.dto.entity.UserDTO;
+import com.codegym.bemd4.model.dto.response.LandlordResponse;
 import com.codegym.bemd4.model.entity.person.Landlord;
 
 import java.util.List;
 
 public interface LandlordService {
-    List<LandlordDTO> getLandlord();
+    LandlordResponse getLandlord(int pageNo, int pageSize);
     LandlordDTO getLandlordById(Long landlordId);
     LandlordDTO registerLandlord(LandlordDTO landlordDTO);
     LandlordDTO remove(Long id);

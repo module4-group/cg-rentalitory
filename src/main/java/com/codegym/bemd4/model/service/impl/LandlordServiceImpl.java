@@ -1,6 +1,7 @@
 package com.codegym.bemd4.model.service.impl;
 
 import com.codegym.bemd4.model.dto.entity.LandlordDTO;
+import com.codegym.bemd4.model.dto.response.LandlordResponse;
 import com.codegym.bemd4.model.entity.person.Landlord;
 import com.codegym.bemd4.model.entity.person.Role;
 import com.codegym.bemd4.model.repository.ILandlordRepository;
@@ -11,6 +12,9 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
@@ -31,11 +35,25 @@ public class LandlordServiceImpl implements LandlordService {
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
     @Override
-    public List<LandlordDTO> getLandlord() {
-        Iterable<Landlord> landlordsEntities = landlordRepository.findAll();
-        return StreamSupport.stream(landlordsEntities.spliterator(), true)
+    public LandlordResponse getLandlord(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo,pageSize);
+        Page<Landlord> landlordEntities = landlordRepository.findAll(pageable);
+
+        List<Landlord> landlords = landlordEntities.getContent();
+
+        List<LandlordDTO> content = StreamSupport.stream(landlords.spliterator(), true)
                 .map(entity -> modelMapper.map(entity, LandlordDTO.class))
                 .collect(Collectors.toList());
+
+        LandlordResponse landlordRespone = new LandlordResponse();
+        landlordRespone.setContent(content);
+        landlordRespone.setPageNo(landlordEntities.getNumber());
+        landlordRespone.setPageSize(landlordEntities.getSize());
+        landlordRespone.setTotalElements(landlordEntities.getTotalElements());
+        landlordRespone.setTotalPages(landlordEntities.getTotalPages());
+        landlordRespone.setLast(landlordEntities.isLast());
+
+        return landlordRespone;
     }
 
     @Override
