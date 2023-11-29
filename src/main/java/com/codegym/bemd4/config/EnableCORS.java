@@ -8,6 +8,6 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Inherited
-@Import({com.codegym.bemd4.config.CorsAutoConfiguration.class})
+
 public @interface EnableCORS {
 }

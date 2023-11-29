@@ -1,22 +1,16 @@
 package com.codegym.bemd4.controller;
 
 import com.codegym.bemd4.model.dto.entity.ApartmentDTO;
-import com.codegym.bemd4.model.dto.entity.BuildingDTO;
 import com.codegym.bemd4.model.dto.entity.LandlordDTO;
-import com.codegym.bemd4.model.dto.entity.UserDTO;
-import com.codegym.bemd4.model.entity.building.Apartment;
-import com.codegym.bemd4.model.entity.building.Building;
+import com.codegym.bemd4.model.dto.response.LandlordResponse;
 import com.codegym.bemd4.model.entity.person.Landlord;
-import com.codegym.bemd4.model.entity.person.User;
 import com.codegym.bemd4.model.service.LandlordService;
-import com.codegym.bemd4.model.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @CrossOrigin("*")
@@ -25,12 +19,21 @@ public class LandlordController {
     @Autowired
     LandlordService landlordService;
     @GetMapping
-    public ResponseEntity<List<LandlordDTO>> getUsers() {
-        List<LandlordDTO> LandlordDTOs = landlordService.getLandlord();
-        if (LandlordDTOs.isEmpty()) {
-            return new ResponseEntity<List<LandlordDTO>>(HttpStatus.NO_CONTENT);
+    public ResponseEntity<LandlordResponse> getUsers(
+            @RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
+            @RequestParam(value = "pageSize", defaultValue = "50", required = false) int pageSize
+
+    ) {
+        LandlordResponse landlordResponse = landlordService.getLandlord(pageNo,pageSize);
+
+        if (landlordResponse == null) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<>(LandlordDTOs, HttpStatus.OK);
+        return new ResponseEntity<>(landlordResponse, HttpStatus.OK);
+    }
+    @GetMapping("{id}")
+    public ResponseEntity<LandlordDTO> getLandlordById(@PathVariable Long id) {
+        return new ResponseEntity<>(landlordService.getLandlordById(id), HttpStatus.OK);
     }
 
     @PostMapping("/register")
@@ -67,6 +70,7 @@ public class LandlordController {
     @GetMapping("/search")
     public ResponseEntity<List<LandlordDTO>> searchLandlordsByFullName(
             @RequestParam("fullName") String fullName) {
+
         List<LandlordDTO> landlords  = landlordService.searchLandlordsByFullNameContains(fullName);
         return ResponseEntity.ok(landlords);
     }

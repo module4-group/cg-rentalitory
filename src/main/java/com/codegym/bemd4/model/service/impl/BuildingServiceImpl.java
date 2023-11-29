@@ -61,12 +61,12 @@ public class BuildingServiceImpl implements BuildingService {
         Landlord landlord = landlordRepository.findLandlordById(createBuildingRequestDTO.getLandlordId()) ;
 
         building.setActivated(true);
+
         building.setAddress(address);
-        building.setLandlord(landlord);
         landlord.getBuildings().add(building);
+        building.setLandlord(landlord);
         landlordRepository.save(landlord);
         buildingRepository.save(building);
-
         return building;
     }
 

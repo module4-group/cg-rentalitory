@@ -38,7 +38,11 @@ public class ApartmentController {
             @RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
             @RequestParam(value = "pageSize", defaultValue = "50", required = false) int pageSize
     ) {
+
         ApartmentResponse apartments = apartmentService.getApartments(pageNo, pageSize);
+        if (apartments == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
         return new ResponseEntity<>(apartments, HttpStatus.OK);
     }
 
