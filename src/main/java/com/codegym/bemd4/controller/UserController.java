@@ -45,7 +45,6 @@ public class UserController {
         if (userDTO==null){
             return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
         }
-        userDTO.setId(user.getId());
         return new ResponseEntity<>(userService.update(userDTO), HttpStatus.OK);
     }
 

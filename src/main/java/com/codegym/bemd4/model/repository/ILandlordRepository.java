@@ -17,7 +17,8 @@ public interface ILandlordRepository extends JpaRepository<Landlord,Long> {
     Landlord findLandlordByUsername(String username);
 
     Landlord findLandlordByEmail(String email);
-    List<Landlord> findByFullNameContainsIgnoreCase(String fullName);
+
+    List<Landlord> searchLandlordByFullName(String fullName);
 
     List<Landlord> findByUsernameContainsIgnoreCase(String name);
 

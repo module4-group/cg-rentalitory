@@ -2,10 +2,7 @@ package com.codegym.bemd4.model.entity.building;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Table(name="address")
@@ -32,4 +29,11 @@ public class Address {
     @Column(name = "activated", nullable = false, columnDefinition = "BIT default true")
     private Boolean activated;
 
+    public Address(String city, String district, String houseNumber, String ward, Boolean activated) {
+        this.city = city;
+        this.district = district;
+        this.houseNumber = houseNumber;
+        this.ward = ward;
+        this.activated = activated;
+    }
 }

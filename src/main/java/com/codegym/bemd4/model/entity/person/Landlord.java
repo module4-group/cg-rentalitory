@@ -3,6 +3,7 @@ package com.codegym.bemd4.model.entity.person;
 
 import com.codegym.bemd4.model.entity.building.Building;
 import com.codegym.bemd4.security.UserLoginDetails;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -67,7 +68,7 @@ public class                Landlord implements UserLoginDetails {
     @Column(name = "activated", nullable = false, columnDefinition = "BIT default true")
     private Boolean activated;
 
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "building_id")
+    @OneToMany(mappedBy="landlord")
+    @JsonIgnore
     List<Building> buildings;
 }

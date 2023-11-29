@@ -33,7 +33,7 @@ public class ApartmentController {
 
 
 
-    @GetMapping
+    @GetMapping("/list")
     public ResponseEntity<ApartmentResponse> getApartments(
             @RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
             @RequestParam(value = "pageSize", defaultValue = "50", required = false) int pageSize

@@ -56,7 +56,6 @@ public class SecurityConfiguration  {
     public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
         return http.getSharedObject(AuthenticationManagerBuilder.class).build();
     }
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.cors()
@@ -65,11 +64,11 @@ public class SecurityConfiguration  {
                 .csrf()
                 .disable();
         http
-                .authorizeHttpRequests()
-                .requestMatchers( "/**").permitAll();
-//                .requestMatchers("/api/apartment/*").hasRole("LANDLORD")
-//                .requestMatchers("/api/user/**").hasRole("ADMIN")
-//                .anyRequest().authenticated();
+                .authorizeHttpRequests((authz) -> authz
+                        .requestMatchers("/api/login","/api/apartments/list","/api/users/register").permitAll()
+                        .requestMatchers("/**").hasRole("ADMIN")
+                        .anyRequest().authenticated()
+                );
 
 
         http

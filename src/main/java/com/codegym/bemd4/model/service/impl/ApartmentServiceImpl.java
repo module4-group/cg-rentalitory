@@ -144,7 +144,6 @@ public class ApartmentServiceImpl implements ApartmentService {
                 .map(entity -> modelMapper.map(entity, ApartmentDTO.class))
                 .collect(Collectors.toList());
 
-
         ApartmentResponse responseDTO = new ApartmentResponse();
         responseDTO.setContent(apartmentDTOs);
         responseDTO.setPageNo(apartmentPage.getNumber());
