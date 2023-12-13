@@ -18,8 +18,7 @@ public interface IApartmentRepository extends JpaRepository<Apartment, Long> {
     @Query( "SELECT a FROM Apartment a " +
             "JOIN a.building b " +
             "JOIN b.address ad " +
-            "WHERE ad.city LIKE :city" +
-            " AND ad.district LIKE :district")
+            "WHERE ad.city LIKE :city" )
     List<Apartment> findAllByCity(String city);
 
     @Query( "SELECT a FROM Apartment a " +

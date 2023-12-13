@@ -102,9 +102,10 @@ public class ApartmentServiceImpl implements ApartmentService {
     @Override
     public Apartment update(ApartmentRequestDTO apartmentRequestDTO) {
         Apartment apartment = modelMapper.map(apartmentRequestDTO,Apartment.class);
-        Building building = buildingRepository.findBuildingById(apartmentRequestDTO.getBuildingId());
+//        Building building = buildingRepository.findBuildingById(apartmentRequestDTO.getBuildingId());
+//        apartment.setBuilding(building);
+        apartment.setActivated(true);
 
-        apartment.setBuilding(building);
         return apartmentRepository.save(apartment);
     }
 

@@ -28,13 +28,12 @@ public class BuildingController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Building> createBuilding(@RequestBody CreateBuildingRequestDTO createBuildingRequestDTO) {
+    public ResponseEntity<String> createBuilding(@RequestBody CreateBuildingRequestDTO createBuildingRequestDTO) {
         if (createBuildingRequestDTO == null) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
         Building building = buildingService.createBuilding(createBuildingRequestDTO);
-        return new ResponseEntity<>(building, HttpStatus.OK);
-        // 1 building chỉ có 1 address và 1 landlord
+        return new ResponseEntity<>("tạo thành công", HttpStatus.OK);
     }
 
     @PutMapping("/{id}")

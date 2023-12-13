@@ -16,4 +16,5 @@ public class LandlordDTO {
     private String phoneNumber;
     private String avatar;
     private List<ApartmentDTO> apartments;
+    private boolean activated;
 }

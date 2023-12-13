@@ -14,6 +14,5 @@ public class CreateBuildingRequestDTO {
     private String district;
     private String ward;
     private String houseNumber;
-    private boolean activated;
     private Long landlordId;
 }

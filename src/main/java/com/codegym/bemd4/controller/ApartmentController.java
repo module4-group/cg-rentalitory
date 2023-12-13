@@ -30,9 +30,6 @@ public class ApartmentController {
     @Autowired
     private ApartmentService apartmentService;
 
-
-
-
     @GetMapping("/list")
     public ResponseEntity<ApartmentResponse> getApartments(
             @RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,

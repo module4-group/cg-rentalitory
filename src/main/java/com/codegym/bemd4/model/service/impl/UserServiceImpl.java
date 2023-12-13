@@ -94,6 +94,7 @@ public class UserServiceImpl implements UserService {
         }
         Role role = roleRepository.findRoleByName("ROLE_USER");
         user.getRoles().add(role);
+        user.setActivated(true);
         user.setActivated(user.getActivated());
         userRepository.save(user);
         UserDTO savedDTO = modelMapper.map(user, UserDTO.class);
